@@ -14,21 +14,33 @@ import { SignUpPage } from "src/pages/admin/home/sign-up";
 export const AppRouter = () => {
 	return (
 		<Routes>
-			<Route path="/" element={<RouterLayout navBar={<NavBar />} />}>
-				<Route path="/" element={<HomePage />} />
+			<Route
+				path="/courier-chain"
+				element={<RouterLayout navBar={<NavBar />} />}>
+				<Route path="/courier-chain" element={<HomePage />} />
 			</Route>
-			<Route path="/login" element={<LoginPage />} />
-			<Route path="/sign-up" element={<SignUpPage />} />
+			<Route path="/courier-chain/login" element={<LoginPage />} />
+			<Route path="/courier-chain/sign-up" element={<SignUpPage />} />
 
-			<Route path="/user" element={<RouterLayout navBar={<NavBarUser />} />}>
-				<Route path="/user" element={<WelcomePage />} />
-				<Route path="/user/payment" element={<PaymentPage />} />
-				<Route path="/user/payment-detailt" element={<PaymentDetailPage />} />
-				<Route path="/user/receipt" element={<UserReceiptPage />} />
+			<Route
+				path="/courier-chain/user"
+				element={<RouterLayout navBar={<NavBarUser />} />}>
+				<Route path="/courier-chain/user" element={<WelcomePage />} />
+				<Route path="/courier-chain/user/payment" element={<PaymentPage />} />
+				<Route
+					path="/courier-chain/user/payment-detailt"
+					element={<PaymentDetailPage />}
+				/>
+				<Route
+					path="/courier-chain/user/receipt"
+					element={<UserReceiptPage />}
+				/>
 			</Route>
 
-			<Route path="/admin" element={<RouterLayout navBar={<NavBarUser />} />}>
-				<Route path="/admin" element={<AdminHomePage />} />
+			<Route
+				path="/courier-chain/admin"
+				element={<RouterLayout navBar={<NavBarUser />} />}>
+				<Route path="/courier-chain/admin" element={<AdminHomePage />} />
 			</Route>
 		</Routes>
 	);
