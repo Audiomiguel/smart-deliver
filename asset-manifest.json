@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/courier-chain/static/css/main.e6c13ad2.css",
-    "main.js": "/courier-chain/static/js/main.2e6c9d63.js",
+    "main.js": "/courier-chain/static/js/main.6cf38e3b.js",
     "static/js/787.3f84e6e7.chunk.js": "/courier-chain/static/js/787.3f84e6e7.chunk.js",
     "static/media/banner-parcel-register.png": "/courier-chain/static/media/banner-parcel-register.039601514a04a4d329c2.png",
     "static/media/detail-contract.png": "/courier-chain/static/media/detail-contract.57a19882a3d8383f91fc.png",
@@ -9,11 +9,11 @@
     "static/media/smart-contracts.png": "/courier-chain/static/media/smart-contracts.3d312fbfa8e7abff96ad.png",
     "index.html": "/courier-chain/index.html",
     "main.e6c13ad2.css.map": "/courier-chain/static/css/main.e6c13ad2.css.map",
-    "main.2e6c9d63.js.map": "/courier-chain/static/js/main.2e6c9d63.js.map",
+    "main.6cf38e3b.js.map": "/courier-chain/static/js/main.6cf38e3b.js.map",
     "787.3f84e6e7.chunk.js.map": "/courier-chain/static/js/787.3f84e6e7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.2e6c9d63.js"
+    "static/js/main.6cf38e3b.js"
   ]
 }
