@@ -50,6 +50,9 @@ export const statusConditions = [
 			"El sistema envia una encuesta de puntuacion del servicio y se apertura el Canal de Reclamos Post-Venta para el Usuario",
 		],
 	},
+
+
+	///----OTROS CASOS EXCEPCIONALES
 	{
 		status: PARCEL_STATUS_TYPES.DELAYED,
 		description: "La encomienda aun no puede ser entrega",

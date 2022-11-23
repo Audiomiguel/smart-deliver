@@ -32,10 +32,10 @@ export const ModalTableAdminComponent = ({ rowTravel }: Props) => {
 				Encomienda: <b>{rowTravel.key}</b>
 			</Typography>
 
-			<Typography id="modal-modal-description" sx={{ mt: 2 }}>
+			{/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
 				Puede realizar los cambios de estados necesarios para continuar con el
 				proceso de envio de encomiendas:
-			</Typography>
+			</Typography> */}
 
 			<Typography>Informacion Completa:</Typography>
 

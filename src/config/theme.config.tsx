@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@mui/material";
+import { PaletteMode, ThemeProvider } from "@mui/material";
 import { CssBaseline } from "@mui/material";
 import { createTheme } from "@mui/material";
 import React from "react";
@@ -10,7 +10,7 @@ type ThemeProp = {
 
 const theme = createTheme({
 	palette: {
-		mode: "dark",
+		mode: "light" as PaletteMode,
 		background: {
 			default: themePalette.BG,
 		},
@@ -41,9 +41,9 @@ const theme = createTheme({
 			styleOverrides: {
 				standardError: {
 					border: `1px solid ${themePalette.ERROR_MAIN}`,
-					background: themePalette.BG_ERROR_MAIN
-				}
-			}
+					background: themePalette.BG_ERROR_MAIN,
+				},
+			},
 		},
 	},
 });

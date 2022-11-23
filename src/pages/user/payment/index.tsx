@@ -45,8 +45,8 @@ export const PaymentPage = () => {
 			</Paper>
 			<Box component="section" sx={{ mt: 2, mb: 3 }}>
 				<Typography>
-					Se estima que el paquete llegara a la oficina de Plaza Norte entre los
-					dias estimados de:
+					Se estima que el paquete llegará a la oficina de Plaza Norte entre los
+					días estimados de:
 				</Typography>
 				<Box sx={{ width: "100%" }}>
 					<Paper>
@@ -72,7 +72,7 @@ export const PaymentPage = () => {
 					</Paper>
 				</Box>
 				<Typography mb={2}>
-					Las clausulas del contrato se veran regidas por:
+					Las cláusulas del contrato se veran regidas por:
 				</Typography>
 
 				<Paper>
@@ -93,7 +93,7 @@ export const PaymentPage = () => {
 				</Paper>
 			</Box>
 			<Typography mb={2}>
-				Si se encuentra conforma con la informacion, puede continuar con la
+				Si se encuentra conforme con la información, puede continuar con la
 				vista de detalle de venta:
 			</Typography>
 
@@ -113,7 +113,7 @@ export const PaymentPage = () => {
 								/>
 							}
 							color="secondary"
-							label="Aceptas los terminos y condiciones que conlleva el envio de encomiendas utilizando Smart Contracts"
+							label="Aceptas los términos y condiciones que conlleva el envio de encomiendas utilizando Smart Contracts"
 						/>
 					</FormGroup>
 					{checkCondition && (
@@ -127,7 +127,7 @@ export const PaymentPage = () => {
 								size="medium"
 								sx={{}}
 								onClick={() => navigate("/user/payment-detailt")}>
-								Continuar al proceso de venta
+								CONTINUAR AL PROCESO DE VENTA
 							</Button>
 						</Grid>
 					)}

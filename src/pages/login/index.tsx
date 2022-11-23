@@ -52,7 +52,7 @@ export const LoginPage = () => {
 							borderRadius: "0.5em",
 						}}>
 						<Typography variant="h4" sx={{ mt: 1, mb: 1 }}>
-							Inicia Sesion
+							Inicia Sesión
 						</Typography>
 						<Box component="form" onSubmit={handleSubmit}>
 							<TextField
@@ -60,7 +60,7 @@ export const LoginPage = () => {
 								margin="normal"
 								type="text"
 								fullWidth
-								label="Nombre de usuario"
+								label="Nombre de Usuario"
 								sx={{ mt: 2, mb: 1.5 }}
 								required
 								onChange={updateLoginData}
@@ -79,10 +79,20 @@ export const LoginPage = () => {
 							<Button
 								fullWidth
 								type="submit"
+								size="large"
 								variant="contained"
+								sx={{ mt: 1.5, mb: 1 }}
+								onClick={() => {}}>
+								INGRESAR
+							</Button>
+							<Button
+								fullWidth
+								type="submit"
+								size="large"
+								variant="outlined"
 								sx={{ mt: 1.5, mb: 3 }}
 								onClick={() => {}}>
-								Ingresar
+								REGISTRARSE
 							</Button>
 						</Box>
 					</Paper>

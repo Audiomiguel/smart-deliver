@@ -9,6 +9,7 @@ import { PaymentPage } from "src/pages/user/payment";
 import { PaymentDetailPage } from "src/pages/user/payment-detail";
 import { AdminHomePage } from "src/pages/admin/home";
 import { UserReceiptPage } from "src/pages/user/receipt";
+import { SignUpPage } from "src/pages/admin/home/sign-up";
 
 export const AppRouter = () => {
 	return (
@@ -17,6 +18,7 @@ export const AppRouter = () => {
 				<Route path="/" element={<HomePage />} />
 			</Route>
 			<Route path="/login" element={<LoginPage />} />
+			<Route path="/sign-up" element={<SignUpPage />} />
 
 			<Route path="/user" element={<RouterLayout navBar={<NavBarUser />} />}>
 				<Route path="/user" element={<WelcomePage />} />

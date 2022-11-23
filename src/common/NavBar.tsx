@@ -30,7 +30,11 @@ export const NavBar = () => {
 									<Button variant="contained" onClick={() => navigate("login")}>
 										Ingresar
 									</Button>
-									<Button variant="outlined">Registrarse</Button>
+									<Button
+										variant="contained"
+										onClick={() => navigate("sign-up")}>
+										Registrarse
+									</Button>
 								</Stack>
 							</Grid>
 						</Grid>

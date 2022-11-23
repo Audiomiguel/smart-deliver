@@ -6,6 +6,7 @@ import EmojiTransportationIcon from "@mui/icons-material/EmojiTransportation";
 import PaymentIcon from "@mui/icons-material/Payment";
 import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
+import MoneyIcon from "@mui/icons-material/Money";
 
 export const PaymentDetailPage = () => {
 	const navigate = useNavigate();
@@ -13,12 +14,12 @@ export const PaymentDetailPage = () => {
 	const tablePaymentInformation = [
 		{
 			icon: <AccessTimeFilledIcon />,
-			title: "Fecha de recibo:",
+			title: "Fecha de recepción:",
 			description: "31 de octubre",
 		},
 		{
 			icon: <EmojiTransportationIcon />,
-			title: "Oficina de recibo:",
+			title: "Oficina de recepción:",
 			description: "Oficina Chorrillos",
 		},
 		{
@@ -28,8 +29,8 @@ export const PaymentDetailPage = () => {
 		},
 		{
 			icon: <BusinessIcon />,
-			title: "Oficina de recibo:",
-			description: "10 de nov - 15 de nov",
+			title: "Oficina de recojo:",
+			description: "Oficina Plaza Norte",
 		},
 	];
 
@@ -69,7 +70,7 @@ export const PaymentDetailPage = () => {
 			</Paper>
 			<Box component="section" sx={{ mt: 2, mb: 3 }}>
 				<Typography variant="h6" fontWeight="400" sx={{ mb: 2 }}>
-					Corrobore la informacion brindada:
+					Corrobore la información brindada:
 				</Typography>
 				{tablePaymentInformation.map((t, index) => (
 					<Box
@@ -94,7 +95,7 @@ export const PaymentDetailPage = () => {
 
 			<Box component="section" sx={{ mt: 2, mb: 1 }}>
 				<Typography variant="h6" fontWeight="400" sx={{ mb: 2 }}>
-					Informacion de pago:
+					Información de pago:
 				</Typography>
 
 				<Paper sx={{ paddingInline: 2, pt: 2, pb: 2 }}>
@@ -117,7 +118,7 @@ export const PaymentDetailPage = () => {
 				</Paper>
 			</Box>
 			<Typography textAlign="center" variant="subtitle1">
-				El monto a conversion de soles al dia de hoy ({getDateToday()})
+				El monto a conversión de soles al día de hoy ({getDateToday()})
 				referencial es de S/50
 			</Typography>
 
@@ -129,9 +130,10 @@ export const PaymentDetailPage = () => {
 					transform: "translateX(-50%)",
 				}}
 				onClick={() => navigate("/user/receipt")}
+				startIcon={<MoneyIcon />}
 				variant="contained"
 				size="large">
-				Conectarse a MetaMask
+				PAGAR
 			</Button>
 		</Container>
 	);

@@ -34,7 +34,7 @@ export const HomePage = () => {
 					mt: 2,
 				}}>
 				<Grid item>
-					<Button variant="outlined" size="large">
+					<Button variant="contained" size="large">
 						Empieza ya
 					</Button>
 				</Grid>

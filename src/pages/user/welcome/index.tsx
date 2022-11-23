@@ -45,7 +45,7 @@ export const WelcomePage = () => {
 			</Paper>
 
 			<Box component="form" onSubmit={() => {}}>
-				<Typography>Datos personales:</Typography>
+				<Typography>Datos personales del Emisor:</Typography>
 
 				<Grid container rowSpacing={0}>
 					<Grid item xs={12}>
@@ -137,7 +137,7 @@ export const WelcomePage = () => {
 							margin="normal"
 							type="text"
 							fullWidth
-							label="Nombre del objeto"
+							label="Nombre Completo"
 							required
 							// onChange={updateLoginData}
 						/>
@@ -149,7 +149,7 @@ export const WelcomePage = () => {
 							margin="normal"
 							type="text"
 							fullWidth
-							label="Valor aproximado"
+							label="N° de Identidad"
 							required
 							// onChange={updateLoginData}
 						/>
@@ -168,7 +168,7 @@ export const WelcomePage = () => {
 						fullWidth
 						variant="contained"
 						onClick={() => navigate("/user/payment")}>
-						Pagar
+						PAGAR
 					</Button>
 				</Box>
 			</Box>

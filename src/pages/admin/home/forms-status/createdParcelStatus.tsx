@@ -34,12 +34,11 @@ export const CreatedParcelStatus = ({ rowTravel }: Props) => {
 	};
 	return (
 		<Box>
-			<Box display="flex" columnGap={2}>
-				<Typography>Cambio de estado:</Typography>
+			<Box display="flex" columnGap={2} alignItems="center" sx={{ mb: 3 }}>
+				{/* <Typography>Cambio de estado:</Typography> */}
 
 				<TextField
 					id="status-form"
-					disabled
 					label="Estado actual Encomienda"
 					value={PARCEL_STATUS[statusCondition.status].label}
 					variant="outlined"
@@ -55,20 +54,21 @@ export const CreatedParcelStatus = ({ rowTravel }: Props) => {
 					variant="outlined"
 				/>
 			</Box>
-			<Divider />
+			<Divider sx={{ mb: 2 }} />
 
 			<Box>
 				<Typography>Descripcion:</Typography>
 				<Typography variant="subtitle1" sx={{ mb: 2 }}>
 					{statusCondition.description}
 				</Typography>
+				<Divider sx={{ mb: 2 }} />
 
-				<Typography>
+				<Typography sx={{ mb: 2 }}>
 					Para que pase al siguiente estado de la encomienda se requiere cumplir
 					las siguientes reglas:
 				</Typography>
 
-				<Paper>
+				<Paper elevation={4}>
 					<List sx={{ width: "100%" }}>
 						{statusCondition.steps.map((s, index) => (
 							<ListItem key={`${index}-item`}>{s}</ListItem>

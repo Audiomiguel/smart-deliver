@@ -4,12 +4,16 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import EmojiTransportationIcon from "@mui/icons-material/EmojiTransportation";
 
 import InventoryIcon from "@mui/icons-material/Inventory";
-import { PARCEL_STATUS, PARCEL_STATUS_TYPES } from "src/constants";
+import {
+	orderedParcelStatuses,
+	PARCEL_STATUS,
+	PARCEL_STATUS_TYPES,
+} from "src/constants";
 
 export const UserReceiptPage = () => {
 	return (
 		<Container sx={{ mt: 2 }}>
-			<Paper sx={{ mb: 2, p: 1 }}>
+			<Paper sx={{ mb: 2, p: 1 }} elevation={3}>
 				<Grid
 					container
 					alignItems="center"
@@ -49,8 +53,8 @@ export const UserReceiptPage = () => {
 					rowGap={3}
 					justifyContent="space-around"
 					sx={{ mb: 3 }}>
-					{Object.values(PARCEL_STATUS_TYPES).map((type, index) => (
-						<Paper sx={{ p: 1, width: "120px" }}>
+					{orderedParcelStatuses.map((type, index) => (
+						<Paper sx={{ p: 1, width: "120px" }} elevation={3}>
 							<Grid
 								item
 								display="flex"
@@ -86,6 +90,7 @@ export const UserReceiptPage = () => {
 				</Box>
 
 				<Paper
+					elevation={3}
 					sx={{
 						display: "flex",
 						columnGap: 3,
