@@ -129,7 +129,7 @@ export const PaymentDetailPage = () => {
 					left: "50%",
 					transform: "translateX(-50%)",
 				}}
-				onClick={() => navigate("/user/receipt")}
+				onClick={() => navigate("/courier-chain/user/receipt")}
 				startIcon={<MoneyIcon />}
 				variant="contained"
 				size="large">

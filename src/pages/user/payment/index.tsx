@@ -126,7 +126,7 @@ export const PaymentPage = () => {
 								variant="contained"
 								size="medium"
 								sx={{}}
-								onClick={() => navigate("/user/payment-detailt")}>
+								onClick={() => navigate("/courier-chain/user/payment-detailt")}>
 								CONTINUAR AL PROCESO DE VENTA
 							</Button>
 						</Grid>

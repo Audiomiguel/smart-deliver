@@ -167,7 +167,7 @@ export const WelcomePage = () => {
 						size="large"
 						fullWidth
 						variant="contained"
-						onClick={() => navigate("/user/payment")}>
+						onClick={() => navigate("/courier-chain/user/payment")}>
 						PAGAR
 					</Button>
 				</Box>

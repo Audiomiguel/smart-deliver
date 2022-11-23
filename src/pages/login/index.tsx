@@ -29,9 +29,9 @@ export const LoginPage = () => {
 		e.preventDefault();
 		console.log(loginData);
 		if (loginData.username === "admin") {
-			navigate("/admin");
+			navigate("/courier-chain/admin");
 		} else {
-			navigate("/user");
+			navigate("/courier-chain/user");
 		}
 	};
 

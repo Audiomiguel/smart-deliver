@@ -22,7 +22,7 @@ export const NavBarUser = () => {
 						justifyContent="space-between"
 						alignItems="center">
 						<Grid item>
-							<Button onClick={() => navigate("/user")}>COURIER CHAIN</Button>
+							<Button onClick={() => navigate("user")}>COURIER CHAIN</Button>
 						</Grid>
 						<Grid item>
 							<Avatar
