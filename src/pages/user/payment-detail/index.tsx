@@ -15,7 +15,7 @@ export const PaymentDetailPage = () => {
 		{
 			icon: <AccessTimeFilledIcon />,
 			title: "Fecha de recepción:",
-			description: "31 de octubre",
+			description: "28 de agosto",
 		},
 		{
 			icon: <EmojiTransportationIcon />,
@@ -25,7 +25,7 @@ export const PaymentDetailPage = () => {
 		{
 			icon: <AccessTimeFilledIcon />,
 			title: "Fecha de recojo:",
-			description: "31 de octubre",
+			description: "29 - 31 de agosto",
 		},
 		{
 			icon: <BusinessIcon />,
@@ -112,7 +112,7 @@ export const PaymentDetailPage = () => {
 							<Typography>Monto a pagar</Typography>
 						</Box>
 						<div>
-							<Typography>0.001 ETH</Typography>
+							<Typography>10 CRC</Typography>
 						</div>
 					</Box>
 				</Paper>

@@ -12,8 +12,8 @@ import { useNavigate } from "react-router-dom";
 export const PaymentPage = () => {
 	const navigate = useNavigate();
 	const clauses = [
-		"1) En el caso de que exista alguna perdida del pedido, se reembolsara el monto indicado en el formulario",
-		"2) Si el cliente no reclama su pedido en los días asignados, la encomienda será transportada al almacen de objetos olvidados, el cual generará un costo de almacenaje durante los días de su estadia.",
+		"1) En el caso de que exista alguna perdida del pedido, se reembolsara el monto indicado en el formulario previa evaluación.",
+		"2) En caso exista o requiera algun reembolso del servicio, se realizará por medio del Smart Contract.",
 		"3) Se generara automaticamente un codigo Hash para el usuario que recogera este pedido. Por lo tanto, debe identificarse con su numero de Documento y con su codigo hash.",
 		"4) No se podra realizar alguna modificacion del contrato al ser un Smart Contract por ninguna persona.",
 	];
@@ -61,12 +61,12 @@ export const PaymentPage = () => {
 							alignContent="center"
 							justifyContent="center">
 							<Typography color="secondary" pr={1}>
-								10 de nov{" "}
+								29 de agosto {" "}
 							</Typography>
 							<Typography>{" - "}</Typography>
 
 							<Typography color="primary" pl={1}>
-								15 de nov
+								31 de agosto
 							</Typography>
 						</Grid>
 					</Paper>

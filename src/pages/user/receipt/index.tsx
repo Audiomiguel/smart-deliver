@@ -54,7 +54,10 @@ export const UserReceiptPage = () => {
 					justifyContent="space-around"
 					sx={{ mb: 3 }}>
 					{orderedParcelStatuses.map((type, index) => (
-						<Paper sx={{ p: 1, width: "120px" }} elevation={3}>
+						<Paper sx={{ p: 1, width: "120px" }} elevation={3} style={ index===0 ?{
+									 border:'2px solid black',
+									 
+								}:undefined}>
 							<Grid
 								item
 								display="flex"
@@ -63,6 +66,7 @@ export const UserReceiptPage = () => {
 								rowGap={1}
 								textAlign="center"
 								sx={{ height: "100%" }}
+								
 								key={`step-${index}`}>
 								{PARCEL_STATUS[type].icon}
 
@@ -109,8 +113,8 @@ export const UserReceiptPage = () => {
 						</Box>
 					</Box>
 					<Box textAlign="right" minWidth="100px">
-						<Typography>0.002 ETH</Typography>
-						<Typography variant="subtitle1">* S/. 200</Typography>
+						<Typography>100 CRC</Typography>
+						<Typography variant="subtitle1">* S/. 50</Typography>
 					</Box>
 				</Paper>
 			</Box>
