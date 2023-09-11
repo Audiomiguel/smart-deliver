@@ -1,1 +1,1 @@
-export * from "./colors-mui";
+export * from './colors-mui';

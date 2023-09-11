@@ -1,1 +1,1 @@
-export * from "./parcel-status.enum";
+export * from './parcel-status.enum';

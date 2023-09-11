@@ -1,156 +1,174 @@
+import React, { useState } from 'react';
 import {
-	Grid,
-	Container,
-	Paper,
-	Box,
-	Typography,
-	TextField,
-	Button,
-	FormControl,
-	InputLabel,
-	Select,
-	MenuItem,
-} from "@mui/material";
-import React, { ChangeEvent, FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+  Container,
+  Grid,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+} from '@mui/material';
+import { LoginService } from 'src/pages/login/login.service';
+import { useNavigate } from 'react-router-dom';
 
 export const SignUpPage = () => {
-	const [loginData, setLoginData] = useState({
-		username: "",
-		password: "",
-	});
+  const navigate = useNavigate();
 
-	const updateLoginData = (e: ChangeEvent<HTMLInputElement>) => {
-		setLoginData({
-			...loginData,
-			[e.target.name]: e.target.value,
-		});
-	};
+  const [isLoading, setIsLoading] = useState(false);
+  const [registerError, setRegisterError] = useState('');
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+    confirmPassword: '',
+    fullName: '',
+    documentNumber: '',
+  });
 
-	const navigate = useNavigate();
+  const [passwordError, setPasswordError] = useState('');
+  const [documentError, setDocumentError] = useState('');
 
-	return (
-		<Container maxWidth="sm">
-			<Grid
-				container
-				direction="column"
-				alignItems="center"
-				justifyContent="center"
-				sx={{
-					minHeight: "90vh",
-				}}>
-				<Grid item>
-					<Paper
-						sx={{
-							padding: "1.2em",
-							borderRadius: "0.5em",
-						}}>
-						<Typography variant="h4" sx={{ mt: 1, mb: 1 }}>
-							Regístrese
-						</Typography>
-						<Box component="form" onSubmit={() => {}}>
-							<TextField
-								name="username"
-								margin="normal"
-								type="text"
-								fullWidth
-								label="Nombre de usuario"
-								sx={{ mt: 2, mb: 1.5 }}
-								required
-								onChange={updateLoginData}
-							/>
-							<TextField
-								name="username"
-								margin="normal"
-								type="text"
-								fullWidth
-								label="Nombre Completo"
-								sx={{ mt: 2, mb: 1.5 }}
-								required
-								onChange={updateLoginData}
-							/>
-							<TextField
-								name="username"
-								margin="normal"
-								type="text"
-								fullWidth
-								label="N° de Documento"
-								sx={{ mt: 2, mb: 1.5 }}
-								required
-								onChange={updateLoginData}
-							/>
-							<TextField
-								name="password"
-								margin="normal"
-								type="password"
-								fullWidth
-								label="Contraseña"
-								sx={{ mt: 1, mb: 1.5 }}
-								required
-								onChange={updateLoginData}
-							/>
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
 
-							{/* <TextField
-								name="password"
-								margin="normal"
-								type="password"
-								fullWidth
-								label="Confirme su Contraseña"
-								sx={{ mt: 1, mb: 1.5 }}
-								required
-								onChange={updateLoginData}
-							/> */}
+    if (name === 'confirmPassword') {
+      // Verificar coincidencia de contraseña
+      if (formData.password !== value) {
+        setPasswordError('Las contraseñas no coinciden');
+      } else {
+        setPasswordError('');
+      }
+    } else if (name === 'documentNumber') {
+      // Verificar longitud y si es un número
+      if (!/^[0-9]{8}$/.test(value)) {
+        setDocumentError(
+          'El número de documento debe contener 8 dígitos numéricos'
+        );
+      } else {
+        setDocumentError('');
+      }
+    }
+  };
 
-							<FormControl fullWidth sx={{ mt: 1, mb: 1.5 }}>
-								<InputLabel id="demo-simple-select-label">
-									Tipo de Usuario
-								</InputLabel>
-								<Select
-									labelId="demo-simple-select-label"
-									id="demo-simple-select"
-									value={10}
-									disabled
-									label="Age"
-									onChange={() => {}}>
-									<MenuItem value={10}>Cliente</MenuItem>
-								</Select>
-							</FormControl>
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      await LoginService.register({
+        password: formData.password,
+        username: formData.username,
+        person: {
+          documentNumber: formData.documentNumber,
+          completeName: formData.fullName,
+        },
+        userType: 'client',
+      });
 
-							<TextField
-								name="username"
-								margin="normal"
-								type="text"
-								fullWidth
-								label="Número de Celular"
-								sx={{ mt: 2, mb: 1.5 }}
-								required
-								onChange={updateLoginData}
-							/>
+      return navigate('/courier-chain/user');
+    } catch (error: any) {
+      setRegisterError(error?.message || 'Error, Volver a intentar');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-							<TextField
-								name="username"
-								margin="normal"
-								type="email"
-								fullWidth
-								label="Correo Electrónico"
-								sx={{ mt: 2, mb: 1.5 }}
-								required
-								onChange={updateLoginData}
-							/>
+  return (
+    <Container maxWidth="sm">
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        sx={{
+          minHeight: '90vh',
+        }}
+      >
+        <Grid item>
+          <Paper
+            sx={{
+              padding: '1.2em',
+              borderRadius: '0.5em',
+            }}
+          >
+            <Typography variant="h4" sx={{ mt: 1, mb: 1 }}>
+              Regístrate
+            </Typography>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                name="username"
+                margin="normal"
+                type="text"
+                fullWidth
+                label="Nombre de Usuario"
+                sx={{ mt: 2, mb: 1.5 }}
+                required
+                onChange={handleInputChange}
+              />
+              <TextField
+                name="password"
+                margin="normal"
+                type="password"
+                fullWidth
+                label="Contraseña"
+                sx={{ mt: 1, mb: 1.5 }}
+                required
+                onChange={handleInputChange}
+              />
+              <TextField
+                name="confirmPassword"
+                margin="normal"
+                type="password"
+                fullWidth
+                label="Repetir Contraseña"
+                sx={{ mt: 1, mb: 1.5 }}
+                required
+                error={passwordError !== ''}
+                helperText={passwordError}
+                onChange={handleInputChange}
+              />
+              <TextField
+                name="fullName"
+                margin="normal"
+                type="text"
+                fullWidth
+                label="Nombre Completo"
+                sx={{ mt: 1, mb: 1.5 }}
+                required
+                onChange={handleInputChange}
+              />
+              <TextField
+                name="documentNumber"
+                margin="normal"
+                type="text"
+                fullWidth
+                label="Número de Documento"
+                sx={{ mt: 1, mb: 1.5 }}
+                required
+                error={documentError !== ''}
+                helperText={documentError}
+                onChange={handleInputChange}
+              />
 
-							<Button
-								fullWidth
-								type="submit"
-								size="large"
-								variant="contained"
-								sx={{ mt: 1.5, mb: 3 }}
-								onClick={() => {}}>
-								Registrarse
-							</Button>
-						</Box>
-					</Paper>
-				</Grid>
-			</Grid>
-		</Container>
-	);
+              <Button
+                fullWidth
+                type="submit"
+                size="large"
+                variant="contained"
+                disabled={isLoading}
+                sx={{ mt: 1.5, mb: 1 }}
+              >
+                REGISTRARSE
+              </Button>
+            </form>
+            {registerError && (
+              <Typography variant="body2" color="error" sx={{ mt: 2 }}>
+                {registerError}
+              </Typography>
+            )}
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
+  );
 };

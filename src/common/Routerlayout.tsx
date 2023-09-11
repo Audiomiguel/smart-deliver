@@ -1,13 +1,13 @@
-import { Outlet } from "react-router-dom";
+import { Outlet } from 'react-router-dom';
 
 interface Props {
-	navBar: React.ReactNode;
+  navBar: React.ReactNode;
 }
 export const RouterLayout = ({ navBar }: Props) => {
-	return (
-		<>
-			{navBar}
-			<Outlet />
-		</>
-	);
+  return (
+    <>
+      {navBar}
+      <Outlet />
+    </>
+  );
 };
