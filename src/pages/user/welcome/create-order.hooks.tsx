@@ -123,7 +123,14 @@ export const useCreateDeliveryOrderHook = () => {
 
     navigate('/courier-chain/user/payment');
   }
-  async function getCommonProps(inputName: keyof formData) {}
+  async function getCommonProps(inputName: keyof IFormData) {
+    return {
+      name: inputName,
+      error: formErrors[inputName],
+      value: formData[inputName],
+      onChange: handleInputChange,
+    };
+  }
 
   return {
     userInfo,
@@ -133,5 +140,6 @@ export const useCreateDeliveryOrderHook = () => {
     handleInputChange,
     validateForm,
     handleSubmitForm,
+    getCommonProps,
   };
 };
