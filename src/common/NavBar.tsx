@@ -9,6 +9,11 @@ import {
   Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import {
+  MetaMaskButton, useAccount,
+  useSDK,
+  useSignMessage
+} from '@metamask/sdk-react-ui';
 
 export const NavBar = () => {
   const navigate = useNavigate();
@@ -28,6 +33,7 @@ export const NavBar = () => {
               </Grid>
               <Grid item>
                 <Stack spacing={2} direction="row">
+                  <MetaMaskButton />
                   <Button variant="contained" onClick={() => navigate('login')}>
                     Ingresar
                   </Button>

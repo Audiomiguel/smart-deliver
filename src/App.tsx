@@ -1,11 +1,13 @@
 import { NotificationProvider } from './context/notification.context';
-
+import { Web3CommonsProvider } from './context/web3.context';
 import { AppRouter } from './routers/router';
 
 function App() {
   return (
     <NotificationProvider>
-      <AppRouter />
+      <Web3CommonsProvider>
+        <AppRouter />
+      </Web3CommonsProvider>
     </NotificationProvider>
   );
 }
