@@ -99,7 +99,9 @@ export const WelcomePage = () => {
               name="sendingOffice"
               value={formData.sendingOffice}
               error={formErrors.sendingOffice}
-              onChange={(e) => handleInputChange(e)}
+              onChange={(e) => {
+                handleInputChange(e);
+              }}
             >
               {officeOptions
                 .filter((office) => office.value !== formData.destinationOffice) // Filtra las opciones que no sean la oficina seleccionada en el primer Select
@@ -160,7 +162,7 @@ export const WelcomePage = () => {
                 formErrors.estimatedValue && 'Este campo es requerido'
               }
               onChange={(e) => handleInputChange(e)}
-              label="Valor aproximado"
+              label="Valor aproximado (S/.)"
               required
               // onChange={updateLoginData}
             />
@@ -171,9 +173,14 @@ export const WelcomePage = () => {
           <Grid item xs={4}>
             <TextField
               fullWidth
-              label="Ancho"
+              label="Ancho (cm)"
               variant="outlined"
-              {...getCommonProps('width')}
+              name="width"
+              type="number"
+              value={formData.width}
+              error={formErrors.width}
+              helperText={formErrors.width && 'Este campo es requerido'}
+              onChange={(e) => handleInputChange(e)}
 
               // Agrega las propiedades y eventos necesarios según tus necesidades
             />
@@ -181,18 +188,29 @@ export const WelcomePage = () => {
           <Grid item xs={4}>
             <TextField
               fullWidth
-              label="Largo"
+              label="Largo (cm)"
               variant="outlined"
-              {...getCommonProps('length')}
+              name="length"
+              type="number"
+              value={formData.length}
+              error={formErrors.length}
+              helperText={formErrors.length && 'Este campo es requerido'}
+              onChange={(e) => handleInputChange(e)}
+
               // Agrega las propiedades y eventos necesarios según tus necesidades
             />
           </Grid>
           <Grid item xs={4}>
             <TextField
               fullWidth
-              label="Alto"
+              label="Alto (cm)"
               variant="outlined"
-              {...getCommonProps('height')}
+              name="height"
+              type="number"
+              value={formData.height}
+              error={formErrors.height}
+              helperText={formErrors.height && 'Este campo es requerido'}
+              onChange={(e) => handleInputChange(e)}
 
               // Agrega las propiedades y eventos necesarios según tus necesidades
             />
@@ -226,12 +244,18 @@ export const WelcomePage = () => {
               fullWidth
               label="N° de Identidad"
               required
-              onChange={(e) => handleInputChange(e)}
+              onChange={(e) => {
+                if (e.target.value.length > 8) return;
+                handleInputChange(e);
+              }}
               value={formData.documentNumber}
               error={formErrors.documentNumber}
               helperText={
                 formErrors.documentNumber && 'Este campo es requerido'
               }
+              inputProps={{
+                maxLength: 8,
+              }}
               // onChange={updateLoginData}
             />
           </Grid>
