@@ -7,17 +7,27 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
+import { useCourierOder } from '../hooks/courier-oder.hook';
 
 export const PaymentPage = () => {
-  const navigate = useNavigate();
+  const { formData, navigate, twoDays, formatedToday } = useCourierOder();
+  const [checkCondition, setCheckCondition] = useState(false);
   const clauses = [
     '1) En el caso de que exista alguna perdida del pedido, se reembolsara el monto indicado en el formulario previa evaluación.',
     '2) En caso exista o requiera algun reembolso del servicio, se realizará por medio del Smart Contract.',
     '3) Se generara automaticamente un codigo Hash para el usuario que recogera este pedido. Por lo tanto, debe identificarse con su numero de Documento y con su codigo hash.',
     '4) No se podra realizar alguna modificacion del contrato al ser un Smart Contract por ninguna persona.',
   ];
-  const [checkCondition, setCheckCondition] = useState(false);
+
+  function confirmSale() {
+    navigate('/courier-chain/user/payment-detailt', {
+      state: {
+        formData,
+      },
+    });
+  }
+
   return (
     <Container sx={{ mt: 2 }}>
       <Paper sx={{ mb: 2 }} elevation={2}>
@@ -46,8 +56,8 @@ export const PaymentPage = () => {
       </Paper>
       <Box component="section" sx={{ mt: 2, mb: 3 }}>
         <Typography>
-          Se estima que el paquete llegará a la oficina de Plaza Norte entre los
-          días estimados de:
+          Se estima que el paquete llegará a la oficina de
+          <b> {formData?.destinationOffice} </b> entre los días estimados de:
         </Typography>
         <Box sx={{ width: '100%' }}>
           <Paper>
@@ -63,12 +73,12 @@ export const PaymentPage = () => {
               justifyContent="center"
             >
               <Typography color="secondary" pr={1}>
-                29 de agosto{' '}
+                {formatedToday}
               </Typography>
               <Typography>{' - '}</Typography>
 
               <Typography color="primary" pl={1}>
-                31 de agosto
+                {twoDays}
               </Typography>
             </Grid>
           </Paper>
@@ -100,7 +110,11 @@ export const PaymentPage = () => {
         vista de detalle de venta:
       </Typography>
 
-      <Paper>
+      <Paper
+        style={{
+          border: '1px solid black',
+        }}
+      >
         <Grid
           container
           alignItems="center"
@@ -125,13 +139,13 @@ export const PaymentPage = () => {
               container
               alignItems="center"
               justifyContent="flex-end"
-              sx={{ mt: 2, mb: 1 }}
+              sx={{ mt: 2, mb: 1, mr: 2 }}
             >
               <Button
                 variant="contained"
                 size="medium"
                 sx={{}}
-                onClick={() => navigate('/courier-chain/user/payment-detailt')}
+                onClick={confirmSale}
               >
                 CONTINUAR AL PROCESO DE VENTA
               </Button>

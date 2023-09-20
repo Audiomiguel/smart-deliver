@@ -1,47 +1,69 @@
-import { Container, Paper, Grid, Typography, Button } from '@mui/material';
+import { Container, Paper, Grid, Typography } from '@mui/material';
 import DetailContractImage from 'src/assets/image/detail-contract.png';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import BusinessIcon from '@mui/icons-material/Business';
+import PersonIcon from '@mui/icons-material/Person';
 import EmojiTransportationIcon from '@mui/icons-material/EmojiTransportation';
 import PaymentIcon from '@mui/icons-material/Payment';
 import { Box } from '@mui/system';
-import { useNavigate } from 'react-router-dom';
-import MoneyIcon from '@mui/icons-material/Money';
+
+import { useCourierOder } from '../hooks/courier-oder.hook';
+import { useEffect, useState } from 'react';
+import { MoneyService } from 'src/service/courier-money.service';
+import { ButtonPaymentDetailComponent } from './button-payment-detail.component';
 
 export const PaymentDetailPage = () => {
-  const navigate = useNavigate();
+  const { formData, twoDays, formatedToday } = useCourierOder();
+
+  const [conversionInfo, setConversionInfo] = useState({
+    solesConversion: '0',
+    referenceValue: '0',
+  });
+
+  async function initializateConversionInfo() {
+    const CRCObjectValue = await MoneyService.getExchangeBySoles(40);
+    const CRCValue = await MoneyService.getMoneyTodayChange();
+
+    setConversionInfo({
+      solesConversion: `${CRCObjectValue} CRC`,
+      referenceValue: `${CRCValue}`,
+    });
+  }
+
+  useEffect(() => {
+    initializateConversionInfo();
+
+    return () => {};
+  }, []);
 
   const tablePaymentInformation = [
     {
       icon: <AccessTimeFilledIcon />,
       title: 'Fecha de recepción:',
-      description: '28 de agosto',
+      description: formatedToday,
     },
     {
       icon: <EmojiTransportationIcon />,
       title: 'Oficina de recepción:',
-      description: 'Oficina Chorrillos',
+      description: formData?.destinationOffice,
     },
     {
       icon: <AccessTimeFilledIcon />,
       title: 'Fecha de recojo:',
-      description: '29 - 31 de agosto',
+      description: twoDays,
     },
     {
       icon: <BusinessIcon />,
       title: 'Oficina de recojo:',
-      description: 'Oficina Plaza Norte',
+      description: formData?.sendingOffice,
+    },
+    {
+      icon: <PersonIcon />,
+      title: 'Persona que recoje:',
+      description: `${formData?.receiverName} -  N° ${formData?.documentNumber}`,
     },
   ];
 
-  const getDateToday = () => {
-    return new Date().toLocaleDateString(undefined, {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
   return (
     <Container sx={{ mt: 2 }}>
       <Paper sx={{ mb: 2, pl: 1, pr: 1, pt: 1, pb: 1 }} elevation={2}>
@@ -70,13 +92,13 @@ export const PaymentDetailPage = () => {
         </Grid>
       </Paper>
       <Box component="section" sx={{ mt: 2, mb: 3 }}>
-        <Typography variant="h6" fontWeight="400" sx={{ mb: 2 }}>
+        <Typography variant="h5" fontWeight="600" sx={{ mb: 2 }}>
           Corrobore la información brindada:
         </Typography>
         {tablePaymentInformation.map((t, index) => (
           <Box
             key={index}
-            sx={{ display: 'flex', pl: 1, pr: 1, pb: 1 }}
+            sx={{ display: 'flex', pl: 1, pr: 1, pb: 2 }}
             alignItems="center"
             justifyContent="space-between"
           >
@@ -97,7 +119,7 @@ export const PaymentDetailPage = () => {
       </Box>
 
       <Box component="section" sx={{ mt: 2, mb: 1 }}>
-        <Typography variant="h6" fontWeight="400" sx={{ mb: 2 }}>
+        <Typography variant="h5" fontWeight="600" sx={{ mb: 2 }}>
           Información de pago:
         </Typography>
 
@@ -117,30 +139,19 @@ export const PaymentDetailPage = () => {
               <Typography>Monto a pagar</Typography>
             </Box>
             <div>
-              <Typography>10 CRC</Typography>
+              <Typography>
+                {conversionInfo.solesConversion} (S/. 40 soles)
+              </Typography>
             </div>
           </Box>
         </Paper>
       </Box>
       <Typography textAlign="center" variant="subtitle1">
-        El monto a conversión de soles al día de hoy ({getDateToday()})
-        referencial es de S/50
+        El monto a conversión de soles al día de hoy ({formatedToday})
+        referencial es S/.1 por cada {conversionInfo.referenceValue} CRC
       </Typography>
 
-      <Button
-        sx={{
-          position: 'fixed',
-          bottom: 20,
-          left: '50%',
-          transform: 'translateX(-50%)',
-        }}
-        onClick={() => navigate('/courier-chain/user/receipt')}
-        startIcon={<MoneyIcon />}
-        variant="contained"
-        size="large"
-      >
-        PAGAR
-      </Button>
+      <ButtonPaymentDetailComponent conversionInfo={conversionInfo} />
     </Container>
   );
 };

@@ -1,11 +1,16 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { OfficeService } from 'src/service/delivery-order.service';
-import { IFormData } from './create-order.interface';
+import { OfficeService } from 'src/service/office.service';
+import { IFormData } from '../interface/create-order.interface';
 
 export const useCreateDeliveryOrderHook = () => {
   const navigate = useNavigate();
-  const [officeOptions, setOfficeOptions] = useState([]);
+  const [officeOptions, setOfficeOptions] = useState<
+    {
+      value: string;
+      label: string;
+    }[]
+  >([]);
 
   const [userInfo, setUserInfo] = useState({
     documentNumber: '',
@@ -19,10 +24,12 @@ export const useCreateDeliveryOrderHook = () => {
     destinationOffice: '',
     contentName: '',
     estimatedValue: '',
-    height: 0,
-    width: 0,
-    length: 0,
+    height: '',
+    width: '',
+    length: '',
   });
+
+  console.log('formData', formData);
 
   const [formErrors, setFormErrors] = useState({
     receiverName: false,
@@ -119,16 +126,33 @@ export const useCreateDeliveryOrderHook = () => {
   };
 
   async function handleSubmitForm() {
-    if (!validateForm()) return;
+    if (!validateForm()) {
+      console.log('Form data', formData);
+      return console.log('Formulario inválido', formErrors);
+    }
 
-    navigate('/courier-chain/user/payment');
+    const newForm: IFormData = {
+      ...formData,
+      sendingOffice:
+        officeOptions.find((office) => office.value === formData.sendingOffice)
+          ?.label || '',
+      destinationOffice:
+        officeOptions.find(
+          (office) => office.value === formData.destinationOffice
+        )?.label || '',
+    };
+
+    navigate('/courier-chain/user/payment', {
+      state: {
+        formData: newForm,
+      },
+    });
   }
   async function getCommonProps(inputName: keyof IFormData) {
     return {
       name: inputName,
       error: formErrors[inputName],
       value: formData[inputName],
-      onChange: handleInputChange,
     };
   }
 

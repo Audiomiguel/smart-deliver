@@ -24,7 +24,6 @@ const login = async (username: string, password: string) => {
 };
 
 const register = async (registerDto: IRegister) => {
-  debugger;
   try {
     const response = await axios.post(`${LOGIN_URL}/register`, registerDto);
   } catch (error: any) {
