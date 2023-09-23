@@ -7,7 +7,7 @@ export const HomePage = () => {
   const { getError } = useNotification();
 
   const handleClick = () => {
-    getError('Hola mundo');
+    alert('Llamar metamask');
   };
 
   return (
@@ -35,7 +35,7 @@ export const HomePage = () => {
         }}
       >
         <Grid item>
-          <Button variant="contained" size="large">
+          <Button variant="contained" size="large" onClick={handleClick}>
             Empieza ya
           </Button>
         </Grid>
