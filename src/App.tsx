@@ -1,13 +1,14 @@
+import { MetaMaskUIProvider } from '@metamask/sdk-react-ui';
 import { NotificationProvider } from './context/notification.context';
-import { Web3CommonsProvider } from './context/web3.context';
 import { AppRouter } from './routers/router';
+import metamaskConfig from './config/metamask.config';
 
 function App() {
   return (
     <NotificationProvider>
-      <Web3CommonsProvider>
+      <MetaMaskUIProvider debug={true} sdkOptions={metamaskConfig}>
         <AppRouter />
-      </Web3CommonsProvider>
+      </MetaMaskUIProvider>
     </NotificationProvider>
   );
 }

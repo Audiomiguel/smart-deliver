@@ -25,7 +25,7 @@ export const AppRouter = () => {
 
       <Route
         path="/courier-chain/user"
-        element={<RouterLayout navBar={<NavBarUser />} />}
+        element={<RouterLayout navBar={<NavBar />} />}
       >
         <Route path="/courier-chain/user" element={<WelcomePage />} />
         <Route path="/courier-chain/user/payment" element={<PaymentPage />} />

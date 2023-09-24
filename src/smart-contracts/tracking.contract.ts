@@ -2,6 +2,6 @@
 import ABI from "./tracking.abi";
 import web3 from "./web3";
 
-const Contract = new web3.eth.Contract(ABI, process.env.TRACKING_ADDRESS);
+const address = process.env.REACT_APP_TRACKING_ADDRESS;
 
-export default Contract;
+export const TrackingContract = new web3.eth.Contract(ABI, address);

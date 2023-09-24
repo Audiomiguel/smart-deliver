@@ -2,6 +2,11 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { OfficeService } from 'src/service/office.service';
 import { IFormData } from '../interface/create-order.interface';
+import { uuidV4 } from 'web3-utils';
+import { TokenContract } from 'src/smart-contracts/token.contract';
+import { TrackingContract } from 'src/smart-contracts/tracking.contract';
+import { utils } from 'web3';
+import { approveTokens } from './services';
 
 export const useCreateDeliveryOrderHook = () => {
   const navigate = useNavigate();
@@ -22,14 +27,12 @@ export const useCreateDeliveryOrderHook = () => {
     documentNumber: '',
     sendingOffice: '',
     destinationOffice: '',
-    contentName: '',
-    estimatedValue: '',
-    height: '',
-    width: '',
-    length: '',
+    contentName: 'Product Name',
+    estimatedValue: '100',
+    height: '20',
+    width: '20',
+    length: '20',
   });
-
-  console.log('formData', formData);
 
   const [formErrors, setFormErrors] = useState({
     receiverName: false,
@@ -46,21 +49,23 @@ export const useCreateDeliveryOrderHook = () => {
   const validateForm = () => {
     const errors = {};
 
-    for (const key in formData) {
-      if (!formData[key]) {
-        errors[key] = true;
-      } else {
-        errors[key] = false;
-      }
-    }
-
-    setFormErrors(errors);
+    setFormErrors({
+      receiverName: true,
+      documentNumber: true,
+      sendingOffice: true,
+      destinationOffice: true,
+      contentName: true,
+      estimatedValue: true,
+      height: true,
+      width: true,
+      length: true,
+    });
 
     // Devuelve true si no hay errores
     return !Object.values(errors).some((error) => error);
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -97,7 +102,6 @@ export const useCreateDeliveryOrderHook = () => {
 
   const getUserInfoFromLocalStorage = () => {
     try {
-      console.log('CALLING ME');
       const userData = localStorage.getItem('loggedUser');
 
       if (!userData) {
@@ -125,27 +129,39 @@ export const useCreateDeliveryOrderHook = () => {
     }
   };
 
-  async function handleSubmitForm() {
-    if (!validateForm()) {
-      console.log('Form data', formData);
-      return console.log('Formulario inválido', formErrors);
-    }
+  async function handleSubmitForm(account: string) {
+    const orderId = uuidV4();
+    console.log('orderId', orderId);
+    const {
+      receiverName,
+      documentNumber,
+      sendingOffice,
+      destinationOffice,
+      contentName,
+      estimatedValue,
+      height,
+      width,
+      length,
+    } = formData;
 
-    const newForm: IFormData = {
-      ...formData,
-      sendingOffice:
-        officeOptions.find((office) => office.value === formData.sendingOffice)
-          ?.label || '',
-      destinationOffice:
-        officeOptions.find(
-          (office) => office.value === formData.destinationOffice
-        )?.label || '',
-    };
+    TrackingContract.setProvider(window.ethereum);
+    TokenContract.setProvider(window.ethereum);
+  
+    const createTracking = TrackingContract.methods.createTrack(
+      orderId,
+      utils.toWei(Number(estimatedValue), 'mwei'),
+      contentName,
+      width,
+      height,
+      length,
+      1,
+    );
 
-    navigate('/courier-chain/user/payment', {
-      state: {
-        formData: newForm,
-      },
+    await createTracking.send({
+      data: createTracking.encodeABI(),
+      from: account,
+      gas: '3000000',
+      gasPrice: utils.toWei('1', 'gwei'),
     });
   }
   async function getCommonProps(inputName: keyof IFormData) {

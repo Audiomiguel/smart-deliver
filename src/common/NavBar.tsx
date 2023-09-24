@@ -1,22 +1,15 @@
 import {
   AppBar,
   Box,
-  Button,
   Container,
   Grid,
   Stack,
   Toolbar,
   Typography,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import {
-  MetaMaskButton, useAccount,
-  useSDK,
-  useSignMessage
-} from '@metamask/sdk-react-ui';
+import { MetaMaskButton } from '@metamask/sdk-react-ui';
 
 export const NavBar = () => {
-  const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky">
@@ -34,15 +27,6 @@ export const NavBar = () => {
               <Grid item>
                 <Stack spacing={2} direction="row">
                   <MetaMaskButton />
-                  <Button variant="contained" onClick={() => navigate('login')}>
-                    Ingresar
-                  </Button>
-                  <Button
-                    variant="contained"
-                    onClick={() => navigate('sign-up')}
-                  >
-                    Registrarse
-                  </Button>
                 </Stack>
               </Grid>
             </Grid>

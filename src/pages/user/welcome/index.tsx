@@ -6,30 +6,72 @@ import {
   TextField,
   Paper,
   Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
 } from '@mui/material';
 import CourierImage from 'src/assets/image/banner-parcel-register.png';
 import { useCreateDeliveryOrderHook } from './create-order.hooks';
+import { useSDK } from '@metamask/sdk-react-ui';
+import { useEffect, useState } from 'react';
+import { approveTokens, geShippingFee, getAllowance, getBalance } from './services';
+import { utils } from 'web3';
+import type { SDKProvider } from "@metamask/sdk";
+
 export const WelcomePage = () => {
-  const steps = [
-    'Datos personales',
-    'Datos del paquete',
-    'Datos del destinatario',
-    'Metodos de pago',
-  ];
+  const sdk = useSDK();
+
+  if (! sdk.ready) {
+    return <div>Cargando...</div>
+  } else if (! sdk.provider) {
+    return <div>Conectando a Metamask</div>
+  } else if (! sdk.account) {
+    return <div>Conecta tu cuenta de Metamask</div>
+  } else {
+    return <WelcomePageContent account={sdk.account} provider={sdk.provider} />
+  }
+};
+
+export const WelcomePageContent = (props: { account: string, provider: SDKProvider }) => {
+  const [symbol, _] = useState<string>('INN');
+  const [wallet, setWallet] = useState({
+    allowance: BigInt(0),
+    balance: BigInt(0),
+    fee: BigInt(0),
+  });
+
+  const balanceFormatted = utils.fromWei(wallet.balance, 'mwei') + ' ' + symbol;
+  const feeFormatted = utils.fromWei(wallet.fee, 'mwei') + ' ' + symbol;
+  const insufficientBalance = wallet.balance < wallet.fee;
+  const insufficientAllowance = wallet.allowance < wallet.fee;
 
   const {
     userInfo,
-    officeOptions,
     formData,
     formErrors,
     handleInputChange,
     handleSubmitForm,
-    getCommonProps,
   } = useCreateDeliveryOrderHook();
+
+  useEffect(() => {
+    const getWallet = async () => {
+      const [allowance, balance, fee] = await Promise.all([
+        getAllowance(props.account),
+        getBalance(props.account),
+        geShippingFee(),
+      ]);
+
+      setWallet({ allowance, balance, fee });
+    }
+
+    props.provider.request({
+      method: 'wallet_switchEthereumChain',
+      params: [
+        { 
+          chainId: '0x13881'
+        },
+      ],
+    });
+
+    getWallet();
+  }, []);
 
   return (
     <Container sx={{ mt: 3 }}>
@@ -51,8 +93,11 @@ export const WelcomePage = () => {
           </Grid>
 
           <Grid item xs={6}>
-            <Typography fontWeight="400" variant="h5" sx={{}}>
+            <Typography fontWeight="400" variant="h4" sx={{}}>
               Registra tu encomienda
+            </Typography>
+            <Typography fontWeight="400" variant="h5" sx={{}}>
+              Tienes un saldo de <strong>{balanceFormatted}</strong>
             </Typography>
           </Grid>
         </Grid>
@@ -86,50 +131,6 @@ export const WelcomePage = () => {
               // onChange={updateLoginData}
             />
           </Grid>
-        </Grid>
-
-        <Typography sx={{ mt: 2, mb: 2 }}>
-          Datos de origen y destino:
-        </Typography>
-
-        <Grid container>
-          <FormControl fullWidth sx={{ mb: 2 }}>
-            <InputLabel>Oficina de Origen</InputLabel>
-            <Select
-              name="sendingOffice"
-              value={formData.sendingOffice}
-              error={formErrors.sendingOffice}
-              onChange={(e) => {
-                handleInputChange(e);
-              }}
-            >
-              {officeOptions
-                .filter((office) => office.value !== formData.destinationOffice) // Filtra las opciones que no sean la oficina seleccionada en el primer Select
-                .map((office) => (
-                  <MenuItem key={office.value} value={office.value}>
-                    {office.label}
-                  </MenuItem>
-                ))}
-            </Select>
-          </FormControl>
-          <FormControl fullWidth>
-            <InputLabel>Oficina de Destino</InputLabel>
-            <Select
-              disabled={!formData.sendingOffice}
-              name="destinationOffice"
-              value={formData.destinationOffice}
-              error={formErrors.sendingOffice}
-              onChange={(e) => handleInputChange(e)}
-            >
-              {officeOptions
-                .filter((office) => office.value !== formData.sendingOffice) // Filtra las opciones que no sean la oficina seleccionada en el primer Select
-                .map((office) => (
-                  <MenuItem key={office.value} value={office.value}>
-                    {office.label}
-                  </MenuItem>
-                ))}
-            </Select>
-          </FormControl>
         </Grid>
 
         <Typography sx={{ mt: 2 }}>Datos del paquete:</Typography>
@@ -269,16 +270,34 @@ export const WelcomePage = () => {
             height: '70px',
           }}
         >
-          <Button
-            size="large"
-            fullWidth
-            variant="contained"
-            onClick={() => handleSubmitForm()}
-          >
-            PAGAR
-          </Button>
+          {insufficientAllowance && (
+             <Button
+              size="large"
+              fullWidth
+              variant="contained"
+              onClick={() => approveTokens(props.account).then(() => {
+                setWallet({
+                  ...wallet,
+                  allowance: wallet.fee,
+                });
+              })}
+            >
+              APROBAR EL USO DE {feeFormatted}
+            </Button>
+          )}
+          {!insufficientAllowance && (
+            <Button
+              disabled={insufficientBalance}
+              size="large"
+              fullWidth
+              variant="contained"
+              onClick={() => handleSubmitForm(props.account)}
+            >
+              PAGAR
+            </Button>
+          )}
         </Box>
       </Box>
     </Container>
   );
-};
+}
