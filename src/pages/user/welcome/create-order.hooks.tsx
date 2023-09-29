@@ -2,13 +2,16 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { OfficeService } from 'src/service/office.service';
 import { IFormData } from '../interface/create-order.interface';
-import { uuidV4 } from 'web3-utils';
-import { TokenContract } from 'src/smart-contracts/token.contract';
-import { TrackingContract } from 'src/smart-contracts/tracking.contract';
-import { utils } from 'web3';
-import { approveTokens } from './services';
+import { v4 } from 'uuid';
+
+import { CreateOrderService } from '../service/create-order.service';
+import { useCreateTrackingSmartHooks } from './create-tracking-smart.hooks';
 
 export const useCreateDeliveryOrderHook = () => {
+  const { sender, isSuccess, allowance, shippingFee, write } =
+    useCreateTrackingSmartHooks();
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const [officeOptions, setOfficeOptions] = useState<
     {
@@ -129,9 +132,14 @@ export const useCreateDeliveryOrderHook = () => {
     }
   };
 
-  async function handleSubmitForm(account: string) {
-    const orderId = uuidV4();
-    console.log('orderId', orderId);
+  async function handleSubmitForm() {
+    setLoading(true);
+    debugger;
+    if (isSuccess) {
+      return alert(`is Sucess: ${isSuccess}`);
+    }
+    if (allowance < shippingFee) write?.();
+
     const {
       receiverName,
       documentNumber,
@@ -144,26 +152,41 @@ export const useCreateDeliveryOrderHook = () => {
       length,
     } = formData;
 
-    TrackingContract.setProvider(window.ethereum);
-    TokenContract.setProvider(window.ethereum);
-  
-    const createTracking = TrackingContract.methods.createTrack(
-      orderId,
-      utils.toWei(Number(estimatedValue), 'mwei'),
-      contentName,
-      width,
-      height,
-      length,
-      1,
-    );
-
-    await createTracking.send({
-      data: createTracking.encodeABI(),
-      from: account,
-      gas: '3000000',
-      gasPrice: utils.toWei('1', 'gwei'),
-    });
+    try {
+      const data = await CreateOrderService.createSmartOrder({
+        sender,
+        id: v4(),
+        amount: estimatedValue,
+        productName: contentName,
+        recipient: {
+          documentType: 'DNI',
+          document: documentNumber,
+          name: receiverName,
+          address: {
+            street: 'Calle 12, Chorrillos',
+            city: 'Lima',
+            state: 'Lima-Estado',
+          },
+        },
+        package: {
+          weight: 99,
+          dimensions: {
+            width: +width,
+            height: +height,
+            length: +length,
+          },
+        },
+      });
+      alert('Data');
+      return;
+    } catch (err: any) {
+      console.log('ERROR', err);
+      alert(`Ha ocurrido un error al crear la orden ${err?.message}`);
+    } finally {
+      setLoading(false);
+    }
   }
+
   async function getCommonProps(inputName: keyof IFormData) {
     return {
       name: inputName,

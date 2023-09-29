@@ -4,16 +4,20 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeConfig } from './config/theme.config';
+import { wagmiConfig } from './config/wagmi.config';
+import { WagmiConfig } from 'wagmi';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <ThemeConfig>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </ThemeConfig>
+  <WagmiConfig config={wagmiConfig}>
+    <ThemeConfig>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThemeConfig>
+  </WagmiConfig>
 );
 
 // If you want to start measuring performance in your app, pass a function

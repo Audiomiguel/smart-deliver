@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { HeaderComponent } from 'src/components';
 import { useNotification } from 'src/context/notification.context';
 import SmartContractImage from 'src/assets/image/smart-contracts.png';
+import { useConnect } from 'wagmi';
+import { InjectedConnector } from 'wagmi/connectors/injected';
 // import { useConnect } from 'wagmi';
 // import { InjectedConnector } from 'wagmi/connectors/injected';
 
@@ -10,32 +12,20 @@ export const HomePage = () => {
   const navigate = useNavigate();
 
   const { getError } = useNotification();
-  // const { connectAsync } = useConnect({
-  //   connector: new InjectedConnector(),
-  // });
-  // const { sdk, provider } = useSDK();
-
-  // const connect = async () => {
-  //   try {
-  //     debugger;
-  //     sdk && (await sdk.connect());
-
-  //     provider &&
-  //       (await provider.request({
-  //         method: 'wallet_watchAsset',
-  //       }));
-  //   } catch (error) {
-  //     const err = error as Error;
-
-  //     getError(`Failed to connect: ` + err.message);
-  //   }
-  // };
+  const { connectAsync } = useConnect({
+    connector: new InjectedConnector(),
+  });
 
   const handleClick = async () => {
     try {
       // await connectAsync();
+      await connectAsync();
+
       navigate('/courier-chain/user');
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.name === 'ConnectorAlreadyConnectedError')
+        return navigate('/courier-chain/user');
+
       alert('Verifique que tenga metamask instalado');
     }
     // connect().then(() => navigate('/courier-chain/user'));

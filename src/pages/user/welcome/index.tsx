@@ -9,13 +9,8 @@ import {
 } from '@mui/material';
 import CourierImage from 'src/assets/image/banner-parcel-register.png';
 import { useCreateDeliveryOrderHook } from './create-order.hooks';
-import { useEffect, useState } from 'react';
-import {
-  approveTokens,
-  geShippingFee,
-  getAllowance,
-  getBalance,
-} from './services';
+import { useState } from 'react';
+
 import { utils } from 'web3';
 
 export const WelcomePage = () => {
@@ -34,17 +29,17 @@ export const WelcomePage = () => {
 };
 
 export const WelcomePageContent = () => {
-  const [symbol, _] = useState<string>('INN');
-  const [wallet, setWallet] = useState({
-    allowance: BigInt(0),
-    balance: BigInt(0),
-    fee: BigInt(0),
-  });
+  // const [symbol, _] = useState<string>('INN');
+  // const [wallet, setWallet] = useState({
+  //   allowance: BigInt(0),
+  //   balance: BigInt(0),
+  //   fee: BigInt(0),
+  // });
 
-  const balanceFormatted = utils.fromWei(wallet.balance, 'mwei') + ' ' + symbol;
-  const feeFormatted = utils.fromWei(wallet.fee, 'mwei') + ' ' + symbol;
-  const insufficientBalance = wallet.balance < wallet.fee;
-  const insufficientAllowance = wallet.allowance < wallet.fee;
+  // const balanceFormatted = utils.fromWei(wallet.balance, 'mwei') + ' ' + symbol;
+  // const feeFormatted = utils.fromWei(wallet.fee, 'mwei') + ' ' + symbol;
+  // const insufficientBalance = wallet.balance < wallet.fee;
+  // const insufficientAllowance = wallet.allowance < wallet.fee;
 
   const {
     userInfo,
@@ -53,30 +48,6 @@ export const WelcomePageContent = () => {
     handleInputChange,
     handleSubmitForm,
   } = useCreateDeliveryOrderHook();
-
-  // console.log('wallet', wallet);
-  // useEffect(() => {
-  //   const getWallet = async () => {
-  //     const [allowance, balance, fee] = await Promise.all([
-  //       getAllowance(props.account),
-  //       getBalance(props.account),
-  //       geShippingFee(),
-  //     ]);
-
-  //     setWallet({ allowance, balance, fee });
-  //   };
-
-  //   props.provider.request({
-  //     method: 'wallet_switchEthereumChain',
-  //     params: [
-  //       {
-  //         chainId: '0x13881',
-  //       },
-  //     ],
-  //   });
-
-  //   getWallet();
-  // }, []);
 
   return (
     <Container sx={{ mt: 3 }}>
@@ -102,10 +73,10 @@ export const WelcomePageContent = () => {
               Registra tu encomienda
             </Typography>
             <Typography fontWeight="400" variant="h5" sx={{}}>
-              Tienes un saldo de{' '}
-              <Button variant="contained" color="primary">
+              {/* Tienes un saldo de{' '} */}
+              {/* <Button variant="contained" color="primary">
                 {balanceFormatted}
-              </Button>
+              </Button> */}
             </Typography>
           </Grid>
         </Grid>
@@ -121,7 +92,7 @@ export const WelcomePageContent = () => {
               margin="normal"
               type="text"
               fullWidth
-              label="Tipo de documento"
+              label="Nombre del Emisor"
               disabled
               value={userInfo.completeName}
               // onChange={updateLoginData}
@@ -143,7 +114,7 @@ export const WelcomePageContent = () => {
 
         <Typography sx={{ mt: 2 }}>Datos del paquete:</Typography>
 
-        <Grid container>
+        <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
               name="contentName"
@@ -159,7 +130,24 @@ export const WelcomePageContent = () => {
             />
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item xs={8}>
+            <TextField
+              name="estimatedValue"
+              margin="normal"
+              type="number"
+              fullWidth
+              value={formData.estimatedValue}
+              error={formErrors.estimatedValue}
+              helperText={
+                formErrors.estimatedValue && 'Este campo es requerido'
+              }
+              onChange={(e) => handleInputChange(e)}
+              label="Valor aproximado (S/.)"
+              required
+              // onChange={updateLoginData}
+            />
+          </Grid>
+          <Grid item xs={4}>
             <TextField
               name="estimatedValue"
               margin="normal"
@@ -278,35 +266,16 @@ export const WelcomePageContent = () => {
             height: '70px',
           }}
         >
-          {insufficientAllowance && (
+          {
             <Button
               size="large"
               fullWidth
               variant="contained"
-              onClick={
-                () => {}
-                // approveTokens(props.account).then(() => {
-                //   setWallet({
-                //     ...wallet,
-                //     allowance: wallet.fee,
-                //   });
-                // })
-              }
-            >
-              APROBAR EL USO DE {feeFormatted}
-            </Button>
-          )}
-          {!insufficientAllowance && (
-            <Button
-              disabled={insufficientBalance}
-              size="large"
-              fullWidth
-              variant="contained"
-              onClick={() => {}}
+              onClick={() => handleSubmitForm()}
             >
               PAGAR
             </Button>
-          )}
+          }
         </Box>
       </Box>
     </Container>
