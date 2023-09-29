@@ -1,5 +1,5 @@
 import { WelcomePage } from 'src/pages/user/welcome';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { RouterLayout } from 'src/common/Routerlayout';
 import { HomePage } from 'src/pages/home';
 import { LoginPage } from 'src/pages/login';
@@ -45,6 +45,7 @@ export const AppRouter = () => {
       >
         <Route path="/courier-chain/admin" element={<AdminHomePage />} />
       </Route>
+      <Route path="*" element={<Navigate to="/courier-chain" />} />
     </Routes>
   );
 };

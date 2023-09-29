@@ -9,27 +9,31 @@ import {
 } from '@mui/material';
 import CourierImage from 'src/assets/image/banner-parcel-register.png';
 import { useCreateDeliveryOrderHook } from './create-order.hooks';
-import { useSDK } from '@metamask/sdk-react-ui';
 import { useEffect, useState } from 'react';
-import { approveTokens, geShippingFee, getAllowance, getBalance } from './services';
+import {
+  approveTokens,
+  geShippingFee,
+  getAllowance,
+  getBalance,
+} from './services';
 import { utils } from 'web3';
-import type { SDKProvider } from "@metamask/sdk";
 
 export const WelcomePage = () => {
-  const sdk = useSDK();
+  // const sdk = useSDK();
+  return <WelcomePageContent />;
 
-  if (! sdk.ready) {
-    return <div>Cargando...</div>
-  } else if (! sdk.provider) {
-    return <div>Conectando a Metamask</div>
-  } else if (! sdk.account) {
-    return <div>Conecta tu cuenta de Metamask</div>
-  } else {
-    return <WelcomePageContent account={sdk.account} provider={sdk.provider} />
-  }
+  // if (!sdk.ready) {
+  //   return <div>Cargando...</div>;
+  // } else if (!sdk.provider) {
+  //   return <div>Conectando a Metamask</div>;
+  // } else if (!sdk.account) {
+  //   return <div>Conecta tu cuenta de Metamask</div>;
+  // } else {
+  //   return <WelcomePageContent account={sdk.account} provider={sdk.provider} />;
+  // }
 };
 
-export const WelcomePageContent = (props: { account: string, provider: SDKProvider }) => {
+export const WelcomePageContent = () => {
   const [symbol, _] = useState<string>('INN');
   const [wallet, setWallet] = useState({
     allowance: BigInt(0),
@@ -50,28 +54,29 @@ export const WelcomePageContent = (props: { account: string, provider: SDKProvid
     handleSubmitForm,
   } = useCreateDeliveryOrderHook();
 
-  useEffect(() => {
-    const getWallet = async () => {
-      const [allowance, balance, fee] = await Promise.all([
-        getAllowance(props.account),
-        getBalance(props.account),
-        geShippingFee(),
-      ]);
+  // console.log('wallet', wallet);
+  // useEffect(() => {
+  //   const getWallet = async () => {
+  //     const [allowance, balance, fee] = await Promise.all([
+  //       getAllowance(props.account),
+  //       getBalance(props.account),
+  //       geShippingFee(),
+  //     ]);
 
-      setWallet({ allowance, balance, fee });
-    }
+  //     setWallet({ allowance, balance, fee });
+  //   };
 
-    props.provider.request({
-      method: 'wallet_switchEthereumChain',
-      params: [
-        { 
-          chainId: '0x13881'
-        },
-      ],
-    });
+  //   props.provider.request({
+  //     method: 'wallet_switchEthereumChain',
+  //     params: [
+  //       {
+  //         chainId: '0x13881',
+  //       },
+  //     ],
+  //   });
 
-    getWallet();
-  }, []);
+  //   getWallet();
+  // }, []);
 
   return (
     <Container sx={{ mt: 3 }}>
@@ -97,7 +102,10 @@ export const WelcomePageContent = (props: { account: string, provider: SDKProvid
               Registra tu encomienda
             </Typography>
             <Typography fontWeight="400" variant="h5" sx={{}}>
-              Tienes un saldo de <strong>{balanceFormatted}</strong>
+              Tienes un saldo de{' '}
+              <Button variant="contained" color="primary">
+                {balanceFormatted}
+              </Button>
             </Typography>
           </Grid>
         </Grid>
@@ -271,16 +279,19 @@ export const WelcomePageContent = (props: { account: string, provider: SDKProvid
           }}
         >
           {insufficientAllowance && (
-             <Button
+            <Button
               size="large"
               fullWidth
               variant="contained"
-              onClick={() => approveTokens(props.account).then(() => {
-                setWallet({
-                  ...wallet,
-                  allowance: wallet.fee,
-                });
-              })}
+              onClick={
+                () => {}
+                // approveTokens(props.account).then(() => {
+                //   setWallet({
+                //     ...wallet,
+                //     allowance: wallet.fee,
+                //   });
+                // })
+              }
             >
               APROBAR EL USO DE {feeFormatted}
             </Button>
@@ -291,7 +302,7 @@ export const WelcomePageContent = (props: { account: string, provider: SDKProvid
               size="large"
               fullWidth
               variant="contained"
-              onClick={() => handleSubmitForm(props.account)}
+              onClick={() => {}}
             >
               PAGAR
             </Button>
@@ -300,4 +311,4 @@ export const WelcomePageContent = (props: { account: string, provider: SDKProvid
       </Box>
     </Container>
   );
-}
+};

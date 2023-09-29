@@ -7,7 +7,6 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import { MetaMaskButton } from '@metamask/sdk-react-ui';
 
 export const NavBar = () => {
   return (
@@ -25,9 +24,9 @@ export const NavBar = () => {
                 <Typography>COURIER CHAIN</Typography>
               </Grid>
               <Grid item>
-                <Stack spacing={2} direction="row">
+                {/* <Stack spacing={2} direction="row">
                   <MetaMaskButton />
-                </Stack>
+                </Stack> */}
               </Grid>
             </Grid>
           </Container>

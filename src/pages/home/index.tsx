@@ -1,33 +1,44 @@
-import { useSDK } from '@metamask/sdk-react-ui';
 import { Button, Container, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { HeaderComponent } from 'src/components';
 import { useNotification } from 'src/context/notification.context';
 import SmartContractImage from 'src/assets/image/smart-contracts.png';
+// import { useConnect } from 'wagmi';
+// import { InjectedConnector } from 'wagmi/connectors/injected';
 
 export const HomePage = () => {
   const navigate = useNavigate();
+
   const { getError } = useNotification();
+  // const { connectAsync } = useConnect({
+  //   connector: new InjectedConnector(),
+  // });
+  // const { sdk, provider } = useSDK();
 
-  const { sdk, provider } = useSDK();
+  // const connect = async () => {
+  //   try {
+  //     debugger;
+  //     sdk && (await sdk.connect());
 
-  const connect = async () => {
+  //     provider &&
+  //       (await provider.request({
+  //         method: 'wallet_watchAsset',
+  //       }));
+  //   } catch (error) {
+  //     const err = error as Error;
+
+  //     getError(`Failed to connect: ` + err.message);
+  //   }
+  // };
+
+  const handleClick = async () => {
     try {
-      sdk && await sdk.connect();
-
-      provider && await provider.request({
-        method: 'wallet_watchAsset',
-      });
-
+      // await connectAsync();
+      navigate('/courier-chain/user');
     } catch (error) {
-      const err = error as Error;
-
-      getError(`Failed to connect: ` + err.message);
+      alert('Verifique que tenga metamask instalado');
     }
-  };
-
-  const handleClick = () => {
-    connect().then(() => navigate('/courier-chain/user'));
+    // connect().then(() => navigate('/courier-chain/user'));
   };
 
   return (
