@@ -72,7 +72,7 @@ export const ButtonPaymentDetailComponent = ({ conversionInfo }: Props) => {
         variant="contained"
         size="large"
       >
-        PAGAR
+        PAGAR 8 INN
       </Button>
       <LoadingModal open={isOpen} />
     </div>

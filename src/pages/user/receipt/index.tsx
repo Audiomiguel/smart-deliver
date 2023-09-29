@@ -88,21 +88,21 @@ export const UserReceiptPage = () => {
         </Grid>
 
         <Box sx={{ mb: 2 }}>
-          <Typography variant="h5" fontWeight="600" sx={{ mb: 2 }}>
+          {/* <Typography variant="h5" fontWeight="600" sx={{ mb: 2 }}>
             Resumen
-          </Typography>
+          </Typography> */}
 
-          <Box display="flex" columnGap={1} sx={{ mb: 1 }}>
+          {/* <Box display="flex" columnGap={1} sx={{ mb: 1 }}>
             <LocalShippingIcon />
             <Typography>Oficina Miraflores</Typography>
           </Box>
           <Box display="flex" columnGap={1}>
             <EmojiTransportationIcon />
             <Typography>Oficina Plaza Norte</Typography>
-          </Box>
+          </Box> */}
         </Box>
 
-        <Paper
+        {/* <Paper
           elevation={3}
           sx={{
             display: 'flex',
@@ -126,7 +126,7 @@ export const UserReceiptPage = () => {
             <Typography>100 CRC</Typography>
             <Typography variant="subtitle1">* S/. 50</Typography>
           </Box>
-        </Paper>
+        </Paper> */}
       </Box>
     </Container>
   );

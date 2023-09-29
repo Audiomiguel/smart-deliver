@@ -11,6 +11,8 @@ export interface IFormData {
 }
 
 export interface ICreateOrder {
+  sender: string;
+  id: string;
   receiverPerson: {
     completeName: string;
     documentNumber: string;
@@ -20,6 +22,7 @@ export interface ICreateOrder {
   parcel: {
     width: number;
     length: number;
+    weight: number;
     height: number;
     contents: [
       {

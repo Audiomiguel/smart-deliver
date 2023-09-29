@@ -134,7 +134,6 @@ export const useCreateDeliveryOrderHook = () => {
 
   async function handleSubmitForm() {
     setLoading(true);
-    debugger;
     if (isSuccess) {
       return alert(`is Sucess: ${isSuccess}`);
     }
@@ -153,8 +152,25 @@ export const useCreateDeliveryOrderHook = () => {
     } = formData;
 
     try {
+      // const data = await CreateOrderService.createOrder({
+      //   sender,
+      //   receiverPerson: {
+      //     completeName: receiverName,
+      //     documentNumber: documentNumber,
+      //   },
+      //   cost: +estimatedValue,
+      //   destinationOfficeName: 'Villa Turing' || destinationOffice,
+      //   sendingOfficeName: 'Plaza Lima Sur' || sendingOffice,
+      //   parcel: {
+      //     contents: [{ contentName, estimatedValue: +estimatedValue }],
+      //     height: +height,
+      //     length: +length,
+      //     width: +width,
+      //     weight: +height, //TODO:
+      //   },
+      //   id: v4(),
+      // });
       const data = await CreateOrderService.createSmartOrder({
-        sender,
         id: v4(),
         amount: estimatedValue,
         productName: contentName,
@@ -176,10 +192,13 @@ export const useCreateDeliveryOrderHook = () => {
             length: +length,
           },
         },
+        sender,
       });
-      alert('Data');
-      return;
+
+      navigate('/courier-chain/user/receipt');
     } catch (err: any) {
+      debugger;
+
       console.log('ERROR', err);
       alert(`Ha ocurrido un error al crear la orden ${err?.message}`);
     } finally {

@@ -94,7 +94,7 @@ export const WelcomePageContent = () => {
               fullWidth
               label="Nombre del Emisor"
               disabled
-              value={userInfo.completeName}
+              value={'Miguel Angel Bustillos Alayo' || userInfo.completeName}
               // onChange={updateLoginData}
             />
           </Grid>
@@ -106,7 +106,7 @@ export const WelcomePageContent = () => {
               fullWidth
               label="Numero de Documento"
               disabled
-              value={userInfo.documentNumber}
+              value={'72647020' || userInfo.documentNumber}
               // onChange={updateLoginData}
             />
           </Grid>
@@ -130,7 +130,7 @@ export const WelcomePageContent = () => {
             />
           </Grid>
 
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             <TextField
               name="estimatedValue"
               margin="normal"
@@ -142,24 +142,7 @@ export const WelcomePageContent = () => {
                 formErrors.estimatedValue && 'Este campo es requerido'
               }
               onChange={(e) => handleInputChange(e)}
-              label="Valor aproximado (S/.)"
-              required
-              // onChange={updateLoginData}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <TextField
-              name="estimatedValue"
-              margin="normal"
-              type="number"
-              fullWidth
-              value={formData.estimatedValue}
-              error={formErrors.estimatedValue}
-              helperText={
-                formErrors.estimatedValue && 'Este campo es requerido'
-              }
-              onChange={(e) => handleInputChange(e)}
-              label="Valor aproximado (S/.)"
+              label="Valor aproximado (INN)"
               required
               // onChange={updateLoginData}
             />
@@ -273,7 +256,7 @@ export const WelcomePageContent = () => {
               variant="contained"
               onClick={() => handleSubmitForm()}
             >
-              PAGAR
+              PAGAR 8 INN
             </Button>
           }
         </Box>

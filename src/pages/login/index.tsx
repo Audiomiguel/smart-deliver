@@ -32,7 +32,6 @@ export const LoginPage = () => {
     e.preventDefault();
     setIsLoadin(true);
 
-    debugger;
     try {
       const { access_token, user } = await LoginService.login(
         loginData.username,
