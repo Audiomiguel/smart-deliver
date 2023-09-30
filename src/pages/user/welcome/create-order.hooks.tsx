@@ -4,11 +4,12 @@ import { OfficeService } from 'src/service/office.service';
 import { IFormData } from '../interface/create-order.interface';
 import { v4 } from 'uuid';
 
-import { CreateOrderService } from '../service/create-order.service';
 import { useCreateTrackingSmartHooks } from './create-tracking-smart.hooks';
+import { useCreateForm } from 'src/context/create-form.contexts';
 
 export const useCreateDeliveryOrderHook = () => {
-  const { sender, isSuccess, allowance, shippingFee, write } =
+  const { formBody, setFormBody } = useCreateForm();
+  const { sender, isSuccess, allowance, shippingFee, write, isLoading } =
     useCreateTrackingSmartHooks();
   const [loading, setLoading] = useState(false);
 
@@ -132,12 +133,8 @@ export const useCreateDeliveryOrderHook = () => {
     }
   };
 
-  async function handleSubmitForm() {
-    setLoading(true);
-    if (isSuccess) {
-      return alert(`is Sucess: ${isSuccess}`);
-    }
-    if (allowance < shippingFee) write?.();
+  const handleSubmitPromise = async () => {
+    debugger;
 
     const {
       receiverName,
@@ -150,27 +147,9 @@ export const useCreateDeliveryOrderHook = () => {
       width,
       length,
     } = formData;
-
+    debugger;
     try {
-      // const data = await CreateOrderService.createOrder({
-      //   sender,
-      //   receiverPerson: {
-      //     completeName: receiverName,
-      //     documentNumber: documentNumber,
-      //   },
-      //   cost: +estimatedValue,
-      //   destinationOfficeName: 'Villa Turing' || destinationOffice,
-      //   sendingOfficeName: 'Plaza Lima Sur' || sendingOffice,
-      //   parcel: {
-      //     contents: [{ contentName, estimatedValue: +estimatedValue }],
-      //     height: +height,
-      //     length: +length,
-      //     width: +width,
-      //     weight: +height, //TODO:
-      //   },
-      //   id: v4(),
-      // });
-      const data = await CreateOrderService.createSmartOrder({
+      const request = {
         id: v4(),
         amount: estimatedValue,
         productName: contentName,
@@ -193,14 +172,50 @@ export const useCreateDeliveryOrderHook = () => {
           },
         },
         sender,
-      });
+      };
+      // const data = await CreateOrderService.createSmartOrder(request);
+      // router.push(`/order-tracking/${data.id}`);
+      setFormBody(formData);
 
-      navigate('/courier-chain/user/receipt');
-    } catch (err: any) {
+      navigate('/courier-chain/user/payment');
+    } catch (e) {
+      alert('Something went wrong, please try again later');
+    }
+  };
+
+  async function handleSubmitForm() {
+    setLoading(true);
+    if (isSuccess) {
       debugger;
+      return;
+    }
+    if (allowance < shippingFee) write?.();
 
+    try {
+      // const data = await CreateOrderService.createOrder({
+      //   sender,
+      //   receiverPerson: {
+      //     completeName: receiverName,
+      //     documentNumber: documentNumber,
+      //   },
+      //   cost: +estimatedValue,
+      //   destinationOfficeName: 'Villa Turing' || destinationOffice,
+      //   sendingOfficeName: 'Plaza Lima Sur' || sendingOffice,
+      //   parcel: {
+      //     contents: [{ contentName, estimatedValue: +estimatedValue }],
+      //     height: +height,
+      //     length: +length,
+      //     width: +width,
+      //     weight: +height, //TODO:
+      //   },
+      //   id: v4(),
+      // });
+      return handleSubmitPromise().finally(() => {
+        debugger;
+        setLoading(false);
+      });
+    } catch (err: any) {
       console.log('ERROR', err);
-      alert(`Ha ocurrido un error al crear la orden ${err?.message}`);
     } finally {
       setLoading(false);
     }
@@ -223,5 +238,7 @@ export const useCreateDeliveryOrderHook = () => {
     validateForm,
     handleSubmitForm,
     getCommonProps,
+    isLoading,
+    loading,
   };
 };

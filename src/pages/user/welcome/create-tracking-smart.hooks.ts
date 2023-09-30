@@ -33,7 +33,7 @@ export const useAllowance = (address: Address) => {
 export const useCreateTrackingSmartHooks = () => {
   const shippingFee = BigInt(8 * 10 ** 6);
 
-  const { address, isDisconnected } = useAccount();
+  const { address } = useAccount();
 
   const { config } = usePayOrder();
 

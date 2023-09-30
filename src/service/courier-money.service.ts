@@ -4,6 +4,7 @@ const MONEY_URL = `${process.env.REACT_APP_API_URL}/money-exchange`;
 
 async function getMoneyTodayChange() {
   try {
+    return 1;
     const response = await axios.get<number>(`${MONEY_URL}/today-conversion`);
     return response.data;
   } catch (error) {
@@ -12,6 +13,7 @@ async function getMoneyTodayChange() {
 }
 
 async function getExchangeBySoles(value: number) {
+  return 1;
   try {
     const response = await axios.get<number>(`${MONEY_URL}`, {
       params: {

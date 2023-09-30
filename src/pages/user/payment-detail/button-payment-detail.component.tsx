@@ -5,26 +5,23 @@ import { useCourierOder } from '../hooks/courier-oder.hook';
 import { useState } from 'react';
 import LoadingModal from 'src/components/modal/loading-modal';
 import { CreateOrderService } from '../service/create-order.service';
+import { useCreateForm } from 'src/context/create-form.contexts';
 
-interface Props {
-  conversionInfo: {
-    solesConversion: string;
-    referenceValue: string;
-  };
-}
-export const ButtonPaymentDetailComponent = ({ conversionInfo }: Props) => {
-  const { navigate, formData } = useCourierOder();
+export const ButtonPaymentDetailComponent = () => {
+  const { formBody } = useCreateForm();
+
+  const { navigate } = useCourierOder();
   const [isOpen, setIsOpen] = useState(false);
 
   async function handlePayment() {
-    if (!formData)
+    if (formBody && Object.keys(formBody).length === 0)
       return alert(
         'No hay informacion de la orden. Volver a realizar la encomienda.'
       );
     setIsOpen(true);
 
     try {
-      const response = await CreateOrderService.createOrder({
+      const request = {
         cost: 40 * +conversionInfo.referenceValue,
         destinationOfficeName: formData.destinationOffice,
         parcel: {
@@ -43,15 +40,12 @@ export const ButtonPaymentDetailComponent = ({ conversionInfo }: Props) => {
           documentNumber: formData.documentNumber,
         },
         sendingOfficeName: formData.sendingOffice,
-      });
+      };
+
+      const response = await CreateOrderService.createOrder(request);
 
       navigate('/courier-chain/user/receipt');
     } catch (err) {
-      alert(
-        `Ha ocurrido un error con la generacion de la orden. Vuelva a intentar ${
-          err?.message || 'Error'
-        }`
-      );
     } finally {
       setIsOpen(false);
     }
@@ -72,7 +66,7 @@ export const ButtonPaymentDetailComponent = ({ conversionInfo }: Props) => {
         variant="contained"
         size="large"
       >
-        PAGAR 8 INN
+        PAGAR 8 INNTEST
       </Button>
       <LoadingModal open={isOpen} />
     </div>

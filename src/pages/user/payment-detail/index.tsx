@@ -6,14 +6,21 @@ import PersonIcon from '@mui/icons-material/Person';
 import EmojiTransportationIcon from '@mui/icons-material/EmojiTransportation';
 import PaymentIcon from '@mui/icons-material/Payment';
 import { Box } from '@mui/system';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import PaidIcon from '@mui/icons-material/Paid';
 
 import { useCourierOder } from '../hooks/courier-oder.hook';
 import { useEffect, useState } from 'react';
 import { MoneyService } from 'src/service/courier-money.service';
 import { ButtonPaymentDetailComponent } from './button-payment-detail.component';
+import { useCreateForm } from 'src/context/create-form.contexts';
 
 export const PaymentDetailPage = () => {
   const { formData, twoDays, formatedToday } = useCourierOder();
+  const { formBody } = useCreateForm();
+
+  debugger;
+  console.log('Form body', formBody);
 
   const [conversionInfo, setConversionInfo] = useState({
     solesConversion: '0',
@@ -45,7 +52,7 @@ export const PaymentDetailPage = () => {
     {
       icon: <EmojiTransportationIcon />,
       title: 'Oficina de recepción:',
-      description: formData?.destinationOffice,
+      description: 'Plaza Lima Sur' || formData?.destinationOffice,
     },
     {
       icon: <AccessTimeFilledIcon />,
@@ -54,13 +61,26 @@ export const PaymentDetailPage = () => {
     },
     {
       icon: <BusinessIcon />,
-      title: 'Oficina de recojo:',
-      description: formData?.sendingOffice,
+      title: 'Oficina de  recojo:',
+      description: 'Villa El Salvador' || formData?.sendingOffice,
     },
     {
       icon: <PersonIcon />,
       title: 'Persona que recoje:',
-      description: `${formData?.receiverName} -  N° ${formData?.documentNumber}`,
+      description:
+        `${formBody?.receiverName}` ||
+        `${formData?.senderName} -  N° ${formData?.documentNumber}`,
+      // description: `${formData?.receiverName} -  N° ${formData?.documentNumber}`,
+    },
+    {
+      icon: <Inventory2Icon />,
+      title: 'Nombre del objeto:',
+      description: formBody?.contentName || 'N.A.',
+    },
+    {
+      icon: <PaidIcon />,
+      title: 'Valor estimado del objeto:',
+      description: `${formBody?.estimatedValue || 0} INN`,
     },
   ];
 
@@ -139,19 +159,13 @@ export const PaymentDetailPage = () => {
               <Typography>Monto a pagar</Typography>
             </Box>
             <div>
-              <Typography>
-                {conversionInfo.solesConversion} (S/. 40 soles)
-              </Typography>
+              <Typography>8 INN</Typography>
             </div>
           </Box>
         </Paper>
       </Box>
-      <Typography textAlign="center" variant="subtitle1">
-        El monto a conversión de soles al día de hoy ({formatedToday})
-        referencial es S/.1 por cada {conversionInfo.referenceValue} CRC
-      </Typography>
 
-      <ButtonPaymentDetailComponent conversionInfo={conversionInfo} />
+      <ButtonPaymentDetailComponent />
     </Container>
   );
 };

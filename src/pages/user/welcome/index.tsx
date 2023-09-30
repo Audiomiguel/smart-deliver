@@ -47,6 +47,8 @@ export const WelcomePageContent = () => {
     formErrors,
     handleInputChange,
     handleSubmitForm,
+    isLoading,
+    loading,
   } = useCreateDeliveryOrderHook();
 
   return (
@@ -254,6 +256,7 @@ export const WelcomePageContent = () => {
               size="large"
               fullWidth
               variant="contained"
+              disabled={isLoading || loading}
               onClick={() => handleSubmitForm()}
             >
               PAGAR 8 INN
