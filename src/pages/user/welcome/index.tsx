@@ -92,7 +92,7 @@ export const WelcomePageContent = () => {
               type="text"
               fullWidth
               label="Nombre del Emisor"
-              disabled
+              onChange={(e) => handleInputChange(e)}
               value={'Miguel Angel Bustillos Alayo' || userInfo.completeName}
               // onChange={updateLoginData}
             />
@@ -104,7 +104,7 @@ export const WelcomePageContent = () => {
               type="text"
               fullWidth
               label="Numero de Documento"
-              disabled
+              onChange={(e) => handleInputChange(e)}
               value={'72647020' || userInfo.documentNumber}
               // onChange={updateLoginData}
             />

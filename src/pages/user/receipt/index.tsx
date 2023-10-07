@@ -42,7 +42,7 @@ export const UserReceiptPage = () => {
 
       <Box component="section" sx={{ mt: 2, mb: 3 }}>
         <Typography variant="h6" fontWeight="400" sx={{ mb: 3 }}>
-          Numero de pedido: <b>{formBody?.id | '00x'}</b>
+          Numero de pedido: <b>{formBody?.id || '00x'}</b>
         </Typography>
 
         <Typography variant="h5" fontWeight="600" sx={{ mb: 3 }}>

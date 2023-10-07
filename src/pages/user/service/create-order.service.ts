@@ -8,7 +8,7 @@ const CREATE_ORDER_URL = `${process.env.REACT_APP_API_URL}/delivery-order`;
 const createSmartOrder = async (order: OrderTracking) => {
   try {
     const response = await axios.post(
-      'http://localhost:3001/order-trackings',
+      'https://tp2-backend-production.up.railway.app/order-trackings',
       order
     );
 
