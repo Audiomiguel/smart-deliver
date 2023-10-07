@@ -4,13 +4,11 @@ import { OfficeService } from 'src/service/office.service';
 import { IFormData } from '../interface/create-order.interface';
 import { v4 } from 'uuid';
 
-import { useCreateTrackingSmartHooks } from './create-tracking-smart.hooks';
 import { useCreateForm } from 'src/context/create-form.contexts';
 
 export const useCreateDeliveryOrderHook = () => {
-  const { formBody, setFormBody } = useCreateForm();
-  const { sender, isSuccess, allowance, shippingFee, write, isLoading } =
-    useCreateTrackingSmartHooks();
+  const { setFormBody } = useCreateForm();
+
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -134,7 +132,7 @@ export const useCreateDeliveryOrderHook = () => {
   };
 
   const handleSubmitPromise = async () => {
-    debugger;
+    //debugger;
 
     const {
       receiverName,
@@ -147,32 +145,31 @@ export const useCreateDeliveryOrderHook = () => {
       width,
       length,
     } = formData;
-    debugger;
     try {
-      const request = {
-        id: v4(),
-        amount: estimatedValue,
-        productName: contentName,
-        recipient: {
-          documentType: 'DNI',
-          document: documentNumber,
-          name: receiverName,
-          address: {
-            street: 'Calle 12, Chorrillos',
-            city: 'Lima',
-            state: 'Lima-Estado',
-          },
-        },
-        package: {
-          weight: 99,
-          dimensions: {
-            width: +width,
-            height: +height,
-            length: +length,
-          },
-        },
-        sender,
-      };
+      // const request = {
+      //   id: v4(),
+      //   amount: estimatedValue,
+      //   productName: contentName,
+      //   recipient: {
+      //     documentType: 'DNI',
+      //     document: documentNumber,
+      //     name: receiverName,
+      //     address: {
+      //       street: 'Calle 12, Chorrillos',
+      //       city: 'Lima',
+      //       state: 'Lima-Estado',
+      //     },
+      //   },
+      //   package: {
+      //     weight: 99,
+      //     dimensions: {
+      //       width: +width,
+      //       height: +height,
+      //       length: +length,
+      //     },
+      //   },
+      //   sender,
+      // };
       // const data = await CreateOrderService.createSmartOrder(request);
       // router.push(`/order-tracking/${data.id}`);
       setFormBody(formData);
@@ -184,41 +181,25 @@ export const useCreateDeliveryOrderHook = () => {
   };
 
   async function handleSubmitForm() {
-    setLoading(true);
-    if (isSuccess) {
-      debugger;
-      return;
-    }
-    if (allowance < shippingFee) write?.();
+    return handleSubmitPromise();
+    // setLoading(true);
+    // if (isSuccess) {
+    //   debugger;
+    //   return;
+    // }
+    // if (allowance < shippingFee) write?.();
 
-    try {
-      // const data = await CreateOrderService.createOrder({
-      //   sender,
-      //   receiverPerson: {
-      //     completeName: receiverName,
-      //     documentNumber: documentNumber,
-      //   },
-      //   cost: +estimatedValue,
-      //   destinationOfficeName: 'Villa Turing' || destinationOffice,
-      //   sendingOfficeName: 'Plaza Lima Sur' || sendingOffice,
-      //   parcel: {
-      //     contents: [{ contentName, estimatedValue: +estimatedValue }],
-      //     height: +height,
-      //     length: +length,
-      //     width: +width,
-      //     weight: +height, //TODO:
-      //   },
-      //   id: v4(),
-      // });
-      return handleSubmitPromise().finally(() => {
-        debugger;
-        setLoading(false);
-      });
-    } catch (err: any) {
-      console.log('ERROR', err);
-    } finally {
-      setLoading(false);
-    }
+    // try {
+
+    //   return handleSubmitPromise().finally(() => {
+    //     debugger;
+    //     setLoading(false);
+    //   });
+    // } catch (err: any) {
+    //   console.log('ERROR', err);
+    // } finally {
+    //   setLoading(false);
+    // }
   }
 
   async function getCommonProps(inputName: keyof IFormData) {
@@ -238,7 +219,7 @@ export const useCreateDeliveryOrderHook = () => {
     validateForm,
     handleSubmitForm,
     getCommonProps,
-    isLoading,
+    isLoading: false,
     loading,
   };
 };

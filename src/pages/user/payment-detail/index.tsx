@@ -19,7 +19,6 @@ export const PaymentDetailPage = () => {
   const { formData, twoDays, formatedToday } = useCourierOder();
   const { formBody } = useCreateForm();
 
-  debugger;
   console.log('Form body', formBody);
 
   const [conversionInfo, setConversionInfo] = useState({

@@ -6,48 +6,89 @@ import { useState } from 'react';
 import LoadingModal from 'src/components/modal/loading-modal';
 import { CreateOrderService } from '../service/create-order.service';
 import { useCreateForm } from 'src/context/create-form.contexts';
+import { useCreateTrackingSmartHooks } from '../welcome/create-tracking-smart.hooks';
+import { v4 } from 'uuid';
 
 export const ButtonPaymentDetailComponent = () => {
-  const { formBody } = useCreateForm();
-
   const { navigate } = useCourierOder();
-  const [isOpen, setIsOpen] = useState(false);
+  const { sender, isSuccess, allowance, shippingFee, write, isLoading } =
+    useCreateTrackingSmartHooks();
+  const [loading, setLoading] = useState(false);
 
-  async function handlePayment() {
+  const { formBody, setFormBody } = useCreateForm();
+
+  async function handleSubmitPromise() {
+    const {
+      receiverName,
+      documentNumber,
+      sendingOffice,
+      destinationOffice,
+      contentName,
+      estimatedValue,
+      height,
+      width,
+      length,
+    } = formBody;
+
+    try {
+      const request: any = {
+        id: v4(),
+        amount: estimatedValue,
+        productName: contentName,
+        recipient: {
+          documentType: 'DNI',
+          document: documentNumber,
+          name: receiverName,
+          address: {
+            street: 'Calle 12, Chorrillos',
+            city: 'Lima',
+            state: 'Lima-Estado',
+          },
+        },
+        package: {
+          weight: 99,
+          dimensions: {
+            width: +width,
+            height: +height,
+            length: +length,
+          },
+        },
+        sender,
+      };
+      const data = await CreateOrderService.createSmartOrder(request);
+
+      setFormBody({
+        ...formBody,
+        id: request?.id || '00001x',
+      });
+      navigate('/courier-chain/user/receipt');
+    } catch (err) {
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function onClick() {
     if (formBody && Object.keys(formBody).length === 0)
       return alert(
         'No hay informacion de la orden. Volver a realizar la encomienda.'
       );
-    setIsOpen(true);
+    setLoading(true);
+    if (isSuccess) {
+      //debugger;
+      return;
+    }
+    if (allowance < shippingFee) write?.();
 
     try {
-      const request = {
-        cost: 40 * +conversionInfo.referenceValue,
-        destinationOfficeName: formData.destinationOffice,
-        parcel: {
-          contents: [
-            {
-              contentName: formData.contentName,
-              estimatedValue: Number(formData.estimatedValue),
-            },
-          ],
-          height: Number(formData.height),
-          length: Number(formData.length),
-          width: Number(formData.width),
-        },
-        receiverPerson: {
-          completeName: formData.receiverName,
-          documentNumber: formData.documentNumber,
-        },
-        sendingOfficeName: formData.sendingOffice,
-      };
-
-      const response = await CreateOrderService.createOrder(request);
-
-      navigate('/courier-chain/user/receipt');
-    } catch (err) {
+      return handleSubmitPromise().finally(() => {
+        //debugger;
+        setLoading(false);
+      });
+    } catch (err: any) {
+      console.log('ERROR', err);
     } finally {
-      setIsOpen(false);
+      setLoading(false);
     }
   }
 
@@ -60,15 +101,15 @@ export const ButtonPaymentDetailComponent = () => {
           left: '50%',
           transform: 'translateX(-50%)',
         }}
-        onClick={handlePayment}
-        disabled={isOpen}
+        onClick={onClick}
+        disabled={loading || isLoading}
         startIcon={<MoneyIcon />}
         variant="contained"
         size="large"
       >
-        PAGAR 8 INNTEST
+        AUTORIZAR PAGO (8 INN)
       </Button>
-      <LoadingModal open={isOpen} />
+      <LoadingModal open={isLoading || loading} />
     </div>
   );
 };

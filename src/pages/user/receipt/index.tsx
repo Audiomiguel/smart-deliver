@@ -1,16 +1,17 @@
-import { Box, Container, Grid, Paper, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
 import DetailContractImage from 'src/assets/image/detail-contract.png';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import EmojiTransportationIcon from '@mui/icons-material/EmojiTransportation';
 
 import InventoryIcon from '@mui/icons-material/Inventory';
-import {
-  orderedParcelStatuses,
-  PARCEL_STATUS,
-  PARCEL_STATUS_TYPES,
-} from 'src/constants';
+import { orderedParcelStatuses, PARCEL_STATUS } from 'src/constants';
+import { useCreateForm } from 'src/context/create-form.contexts';
+import { useNavigate } from 'react-router-dom';
 
 export const UserReceiptPage = () => {
+  const { formBody } = useCreateForm();
+  const navigate = useNavigate();
+
   return (
     <Container sx={{ mt: 2 }}>
       <Paper sx={{ mb: 2, p: 1 }} elevation={3}>
@@ -33,7 +34,7 @@ export const UserReceiptPage = () => {
 
           <Grid item xs={6}>
             <Typography fontWeight="400" variant="h5">
-              Miguel, Gracias por confiar en CourierChain
+              Gracias por confiar en CourierChain
             </Typography>
           </Grid>
         </Grid>
@@ -41,7 +42,7 @@ export const UserReceiptPage = () => {
 
       <Box component="section" sx={{ mt: 2, mb: 3 }}>
         <Typography variant="h6" fontWeight="400" sx={{ mb: 3 }}>
-          Numero de pedido: <b>19825431</b>
+          Numero de pedido: <b>{formBody?.id | '00x'}</b>
         </Typography>
 
         <Typography variant="h5" fontWeight="600" sx={{ mb: 3 }}>
@@ -87,22 +88,27 @@ export const UserReceiptPage = () => {
           ))}
         </Grid>
 
-        <Box sx={{ mb: 2 }}>
-          {/* <Typography variant="h5" fontWeight="600" sx={{ mb: 2 }}>
-            Resumen
-          </Typography> */}
+        <Typography sx={{ mb: 2 }}>
+          En caso se requiera un reembolso o exista una perdida del paquete,
+          contactese con el area administrativa para su resolución del caso.
+        </Typography>
 
-          {/* <Box display="flex" columnGap={1} sx={{ mb: 1 }}>
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="h5" fontWeight="600" sx={{ mb: 2 }}>
+            Resumen
+          </Typography>
+
+          <Box display="flex" columnGap={1} sx={{ mb: 1 }}>
             <LocalShippingIcon />
             <Typography>Oficina Miraflores</Typography>
           </Box>
           <Box display="flex" columnGap={1}>
             <EmojiTransportationIcon />
             <Typography>Oficina Plaza Norte</Typography>
-          </Box> */}
+          </Box>
         </Box>
 
-        {/* <Paper
+        <Paper
           elevation={3}
           sx={{
             display: 'flex',
@@ -117,17 +123,35 @@ export const UserReceiptPage = () => {
             <InventoryIcon fontSize="large" />
             <Box>
               <Typography fontWeight="600">
-                LAPTOP 14' PULGADAS EN CAJA
+                {formBody?.receiverName || 'Paquete'}
               </Typography>
-              <Typography>Caja de 1.00 x 0.20 x 1.10</Typography>
+              <Typography>
+                Caja de alto: {`${formBody?.height || 0} cm`}, ancho:
+                {`${formBody?.width || 0} cm`} , largo:
+                {`${formBody?.length || 0} cm`}
+              </Typography>
             </Box>
           </Box>
-          <Box textAlign="right" minWidth="100px">
-            <Typography>100 CRC</Typography>
-            <Typography variant="subtitle1">* S/. 50</Typography>
+          <Box textAlign="right" minWidth="300px">
+            <Typography>{`Valor estimado: ${
+              formBody?.estimatedValue || 0
+            } INN`}</Typography>
+            <Typography variant="subtitle1">{`Costo de envio: 8 INN`}</Typography>
           </Box>
-        </Paper> */}
+        </Paper>
       </Box>
+
+      <Button
+        fullWidth
+        size="large"
+        variant="contained"
+        onClick={(e) => {
+          e.preventDefault();
+          navigate('/courier-chain');
+        }}
+      >
+        Volver a hacer un envio{' '}
+      </Button>
     </Container>
   );
 };

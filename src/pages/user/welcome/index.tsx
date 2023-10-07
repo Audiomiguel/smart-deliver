@@ -9,9 +9,6 @@ import {
 } from '@mui/material';
 import CourierImage from 'src/assets/image/banner-parcel-register.png';
 import { useCreateDeliveryOrderHook } from './create-order.hooks';
-import { useState } from 'react';
-
-import { utils } from 'web3';
 
 export const WelcomePage = () => {
   // const sdk = useSDK();

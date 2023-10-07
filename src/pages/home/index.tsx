@@ -24,7 +24,7 @@ export const HomePage = () => {
       navigate('/courier-chain/user');
     } catch (error: any) {
       if (error?.name === 'ConnectorAlreadyConnectedError')
-        return navigate('/courier-chain/user');
+        return navigate('/courier-chain/');
 
       alert('Verifique que tenga metamask instalado');
     }
