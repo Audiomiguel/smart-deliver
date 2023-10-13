@@ -23,11 +23,12 @@ export const NavBarUser = () => {
             alignItems="center"
           >
             <Grid item>
-              <Button onClick={() => navigate('user')}>COURIER CHAIN</Button>
+              <Button>User</Button>
             </Grid>
             <Grid item>
               <Avatar
-                sx={{ bgcolor: 'orange' }}
+                onClick={() => navigate('/courier-chain/user')}
+                sx={{ bgcolor: 'orange', cursor: 'pointer' }}
                 alt="Miguel Bustillos"
                 src="/broken-image.jpg"
               />

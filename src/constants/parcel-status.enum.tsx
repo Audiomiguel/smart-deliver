@@ -6,103 +6,82 @@ import HandshakeIcon from '@mui/icons-material/Handshake';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 export enum PARCEL_STATUS_TYPES {
-  CREATED = '100',
-  ACCEPTED = '99',
-  RECEIVED = '101',
-  COMING = '102',
-  WAITING = '103',
-  FINISHED = '104',
-  DELAYED = '105',
-  LOST = '106',
-  ABANDONED = '107', //Abandonado por el usuario, cobro por dia
+  ORDERED = 'ORDERED',
+  SHIPPED = 'SHIPPED',
+  REFUNDED = 'REFUNDED',
+  CANCELLED = 'CANCELLED',
+  DELIVERED = 'DELIVERED',
 }
 
 export const orderedParcelStatuses: PARCEL_STATUS_TYPES[] = [
-  PARCEL_STATUS_TYPES.CREATED,
-  PARCEL_STATUS_TYPES.ACCEPTED,
-  PARCEL_STATUS_TYPES.RECEIVED,
+  PARCEL_STATUS_TYPES.ORDERED,
+  PARCEL_STATUS_TYPES.SHIPPED,
 
-  PARCEL_STATUS_TYPES.COMING,
+  PARCEL_STATUS_TYPES.REFUNDED,
 
-  PARCEL_STATUS_TYPES.WAITING,
+  PARCEL_STATUS_TYPES.CANCELLED,
 
-  PARCEL_STATUS_TYPES.FINISHED,
+  PARCEL_STATUS_TYPES.DELIVERED,
   // PARCEL_STATUS_TYPES.DELAYED,
   // PARCEL_STATUS_TYPES.LOST,
   // PARCEL_STATUS_TYPES.ABANDONED,
 ];
 
+// De ordered a shipped
+
 export enum PARCEL_STATUS_COLOR {
-  CREATED = 'error',
-  ACCEPTED = 'info',
+  ORDERED = 'error',
+  SHIPPED = 'info',
   RECEIVED = 'warning',
-  COMING = 'info',
-  WAITING = 'success',
-  FINISHED = 'secondary',
-  LOST = 'error',
-  ABANDONED = 'info',
-  DELAYED = 'error',
+  REFUNDED = undefined,
+  CANCELLED = 'success',
+  DELIVERED = 'secondary',
 
   //"default" | "error" | "primary" | "secondary" | "info" | "success" | "warning" | undefined
 }
 
+export const ParcelTranslated = {
+  ORDERED: 'Ordenado',
+  SHIPPED: 'Enviado',
+  REFUNDED: 'Reembolsado',
+  CANCELLED: 'Cancelado',
+  DELIVERED: 'Entregado',
+};
+
 export enum PARCEL_STATUS_NAME {
-  CREATED = 'Recibimos tu solicitud',
-  ACCEPTED = 'Esperamos tu paquete',
-  RECEIVED = 'Por enviar al bus',
-  COMING = 'En ruta',
-  WAITING = 'Por recojer paquete',
-  FINISHED = 'Entregado',
-  LOST = 'Perdido por la empresa',
-  ABANDONED = 'Abandonado',
-  DELAYED = 'Retrasado',
+  ORDERED = 'ORDENADO',
+  SHIPPED = 'ENVIADO',
+  RECEIVED = 'RECIBIDO',
+  REFUNDED = 'REEMBOLSADO',
+  CANCELLED = 'CANCELADO',
+  DELIVERED = 'ENTREGADO',
 }
 
 export const PARCEL_STATUS = {
-  [PARCEL_STATUS_TYPES.CREATED]: {
-    color: PARCEL_STATUS_COLOR.CREATED,
-    label: PARCEL_STATUS_NAME.CREATED,
+  [PARCEL_STATUS_TYPES.ORDERED]: {
+    color: PARCEL_STATUS_COLOR.ORDERED,
+    label: PARCEL_STATUS_NAME.ORDERED,
     icon: <AccessTimeIcon fontSize="large" />,
   },
-  [PARCEL_STATUS_TYPES.ACCEPTED]: {
-    color: PARCEL_STATUS_COLOR.ACCEPTED,
-    label: PARCEL_STATUS_NAME.ACCEPTED,
+  [PARCEL_STATUS_TYPES.SHIPPED]: {
+    color: PARCEL_STATUS_COLOR.SHIPPED,
+    label: PARCEL_STATUS_NAME.SHIPPED,
     icon: <CheckCircleOutlineIcon fontSize="large" />,
   },
 
-  [PARCEL_STATUS_TYPES.RECEIVED]: {
-    color: PARCEL_STATUS_COLOR.RECEIVED,
-    label: PARCEL_STATUS_NAME.RECEIVED,
-    icon: <DepartureBoardIcon fontSize="large" />,
-  },
-  [PARCEL_STATUS_TYPES.COMING]: {
-    color: PARCEL_STATUS_COLOR.COMING,
-    label: PARCEL_STATUS_NAME.COMING,
+  [PARCEL_STATUS_TYPES.REFUNDED]: {
+    color: PARCEL_STATUS_COLOR.REFUNDED,
+    label: PARCEL_STATUS_NAME.REFUNDED,
     icon: <AirportShuttleIcon fontSize="large" />,
   },
-  [PARCEL_STATUS_TYPES.WAITING]: {
-    color: PARCEL_STATUS_COLOR.WAITING,
-    label: PARCEL_STATUS_NAME.WAITING,
+  [PARCEL_STATUS_TYPES.CANCELLED]: {
+    color: PARCEL_STATUS_COLOR.CANCELLED,
+    label: PARCEL_STATUS_NAME.CANCELLED,
     icon: <EmojiTransportationIcon fontSize="large" />,
   },
-  [PARCEL_STATUS_TYPES.FINISHED]: {
-    color: PARCEL_STATUS_COLOR.FINISHED,
-    label: PARCEL_STATUS_NAME.FINISHED,
-    icon: <HandshakeIcon fontSize="large" />,
-  },
-  [PARCEL_STATUS_TYPES.DELAYED]: {
-    color: PARCEL_STATUS_COLOR.DELAYED,
-    label: PARCEL_STATUS_NAME.DELAYED,
-    icon: <HandshakeIcon fontSize="large" />,
-  },
-  [PARCEL_STATUS_TYPES.LOST]: {
-    color: PARCEL_STATUS_COLOR.LOST,
-    label: PARCEL_STATUS_NAME.LOST,
-    icon: <HandshakeIcon fontSize="large" />,
-  },
-  [PARCEL_STATUS_TYPES.ABANDONED]: {
-    color: PARCEL_STATUS_COLOR.ABANDONED,
-    label: PARCEL_STATUS_NAME.ABANDONED,
+  [PARCEL_STATUS_TYPES.DELIVERED]: {
+    color: PARCEL_STATUS_COLOR.DELIVERED,
+    label: PARCEL_STATUS_NAME.DELIVERED,
     icon: <HandshakeIcon fontSize="large" />,
   },
 };

@@ -2,17 +2,52 @@ import axios from 'axios';
 import { ICreateOrder } from '../interface/create-order.interface';
 import { getBearerHeader } from 'src/helper';
 import { OrderTracking } from '../interface/OrderTracking';
+import { IParcelData, ParcelStatus } from './create-order.interface';
 
 const CREATE_ORDER_URL = `${process.env.REACT_APP_API_URL}/delivery-order`;
 
 const createSmartOrder = async (order: OrderTracking) => {
   try {
     const response = await axios.post(
-      'https://tp2-backend-production.up.railway.app/order-trackings',
+      `${process.env.REACT_APP_API_URL}/order-trackings`,
       order
     );
 
     return response;
+  } catch (err: any) {
+    throw new Error(err?.response?.data?.message || err.message);
+  }
+};
+
+const getSmartOrders = async () => {
+  try {
+    const response = (
+      await axios.get<IParcelData[]>(
+        `${process.env.REACT_APP_API_URL}/order-trackings`
+      )
+    ).data;
+
+    return response;
+  } catch (err: any) {
+    throw new Error(err?.response?.data?.message || err.message);
+  }
+};
+
+const changeSmartOrderStatus = async (id: string, status: ParcelStatus) => {
+  try {
+    const response = (
+      await axios.patch<any>(
+        `${process.env.REACT_APP_API_URL}/order-trackings/${id}`,
+        null,
+        {
+          params: {
+            status,
+          },
+        }
+      )
+    ).data;
+
+    return response as { message: string };
   } catch (err: any) {
     throw new Error(err?.response?.data?.message || err.message);
   }
@@ -32,7 +67,9 @@ const createOrder = async (order: ICreateOrder) => {
   }
 };
 
-export const CreateOrderService = {
+export const OrderService = {
   createOrder,
   createSmartOrder,
+  getSmartOrders,
+  changeSmartOrderStatus,
 };

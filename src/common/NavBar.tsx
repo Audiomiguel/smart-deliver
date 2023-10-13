@@ -6,7 +6,9 @@ import {
   Stack,
   Toolbar,
   Typography,
+  Button,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export const NavBar = () => {
   return (
@@ -24,9 +26,17 @@ export const NavBar = () => {
                 <Typography>COURIER CHAIN</Typography>
               </Grid>
               <Grid item>
-                {/* <Stack spacing={2} direction="row">
-                  <MetaMaskButton />
-                </Stack> */}
+                <Stack spacing={2} direction="row">
+                  <Button
+                    component={Link}
+                    to="/courier-chain/admin"
+                    variant="outlined"
+                    color="inherit"
+                  >
+                    Admin
+                  </Button>
+                  {/* <MetaMaskButton /> */}
+                </Stack>
               </Grid>
             </Grid>
           </Container>

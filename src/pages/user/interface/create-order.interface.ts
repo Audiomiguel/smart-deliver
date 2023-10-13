@@ -8,6 +8,9 @@ export interface IFormData {
   height: string;
   width: string;
   length: string;
+
+  emisorName: string;
+  emisorDocument: string;
 }
 
 export interface ICreateOrder {

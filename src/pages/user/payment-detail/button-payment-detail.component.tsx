@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCourierOder } from '../hooks/courier-oder.hook';
 import { useState } from 'react';
 import LoadingModal from 'src/components/modal/loading-modal';
-import { CreateOrderService } from '../service/create-order.service';
+import { OrderService } from '../service/create-order.service';
 import { useCreateForm } from 'src/context/create-form.contexts';
 import { useCreateTrackingSmartHooks } from '../welcome/create-tracking-smart.hooks';
 import { v4 } from 'uuid';
@@ -55,7 +55,7 @@ export const ButtonPaymentDetailComponent = () => {
         },
         sender,
       };
-      const data = await CreateOrderService.createSmartOrder(request);
+      const data = await OrderService.createSmartOrder(request);
 
       setFormBody({
         ...formBody,

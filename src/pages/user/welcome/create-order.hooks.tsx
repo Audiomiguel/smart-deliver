@@ -29,11 +29,13 @@ export const useCreateDeliveryOrderHook = () => {
     documentNumber: '',
     sendingOffice: '',
     destinationOffice: '',
-    contentName: 'Product Name',
-    estimatedValue: '100',
-    height: '20',
-    width: '20',
-    length: '20',
+    contentName: '',
+    estimatedValue: '10',
+    height: '',
+    width: '',
+    length: '',
+    emisorDocument: '',
+    emisorName: '',
   });
 
   const [formErrors, setFormErrors] = useState({

@@ -3,6 +3,7 @@ import { Notification } from 'src/components';
 import { AlertColor } from '@mui/material/Alert';
 type ContextProps = {
   getError: (msg: string) => void;
+  getSuccess: (msg: string) => void;
 };
 export const NotificationContext = createContext<ContextProps | null>(null);
 
@@ -24,12 +25,20 @@ export const NotificationProvider = ({
     setMessage(msg);
   };
 
+  const getSuccess = (msg: string) => {
+    setSeverity('success');
+    setOpen(true);
+    setMessage(msg);
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
   const value = {
     getError,
+    getSuccess,
   };
+
   return (
     <NotificationContext.Provider value={value}>
       <Notification

@@ -87,25 +87,29 @@ export const WelcomePageContent = () => {
         <Grid container rowSpacing={0}>
           <Grid item xs={12}>
             <TextField
-              name="name1"
+              name="emisorName"
               margin="normal"
               type="text"
               fullWidth
               label="Nombre del Emisor"
               onChange={(e) => handleInputChange(e)}
-              value={'Miguel Angel Bustillos Alayo' || userInfo.completeName}
+              value={formData.emisorName}
               // onChange={updateLoginData}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              name="name2"
+              name="emisorDocument"
               margin="normal"
-              type="text"
               fullWidth
+              type="number"
               label="Numero de Documento"
-              onChange={(e) => handleInputChange(e)}
-              value={'72647020' || userInfo.documentNumber}
+              onChange={(e) => {
+                if (e.target.value.length > 8) return;
+
+                handleInputChange(e);
+              }}
+              value={formData.emisorDocument}
               // onChange={updateLoginData}
             />
           </Grid>

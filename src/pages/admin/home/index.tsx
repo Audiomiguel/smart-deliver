@@ -4,7 +4,7 @@ import { ParcelTableComponent } from './table/parcelTable.component';
 
 export const AdminHomePage = () => {
   return (
-    <Container sx={{ mt: 2 }}>
+    <div style={{ padding: '12px' }}>
       <Paper sx={{ mb: 2 }} elevation={2}>
         <Grid
           container
@@ -31,6 +31,6 @@ export const AdminHomePage = () => {
         </Grid>
       </Paper>
       <ParcelTableComponent />
-    </Container>
+    </div>
   );
 };
