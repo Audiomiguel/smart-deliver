@@ -1,7 +1,7 @@
 {
-  "name": "courier-chain-app",
+  "name": "smart-deliver-app",
   "version": "0.1.0",
-  "homepage": "https://audiomiguel.github.io/courier-chain",
+  "homepage": "https://audiomiguel.github.io/smart-deliver",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.4",

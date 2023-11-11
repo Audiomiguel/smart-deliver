@@ -27,7 +27,7 @@ export const NavBarUser = () => {
             </Grid>
             <Grid item>
               <Avatar
-                onClick={() => navigate('/courier-chain/user')}
+                onClick={() => navigate('/smart-deliver/user')}
                 sx={{ bgcolor: 'orange', cursor: 'pointer' }}
                 alt="Miguel Bustillos"
                 src="/broken-image.jpg"

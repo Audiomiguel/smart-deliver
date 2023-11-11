@@ -27,8 +27,8 @@ export const useCreateDeliveryOrderHook = () => {
   const [formData, setFormData] = useState<IFormData>({
     receiverName: '',
     documentNumber: '',
-    sendingOffice: '',
-    destinationOffice: '',
+    sendingOffice: 'Plaza Lima Sur',
+    destinationOffice: 'Destino',
     contentName: '',
     estimatedValue: '10',
     height: '',
@@ -38,7 +38,8 @@ export const useCreateDeliveryOrderHook = () => {
     emisorName: '',
   });
 
-  const [formErrors, setFormErrors] = useState({
+  const [formErrors, setFormErrors] = useState<Record<string, boolean>>({
+    emisorName: false,
     receiverName: false,
     documentNumber: false,
     sendingOffice: false,
@@ -48,24 +49,36 @@ export const useCreateDeliveryOrderHook = () => {
     height: false,
     width: false,
     length: false,
+    emisorDocument: false,
   });
 
   const validateForm = () => {
-    const errors = {};
+    const errors: Record<string, boolean> = {};
 
-    setFormErrors({
-      receiverName: true,
-      documentNumber: true,
-      sendingOffice: true,
-      destinationOffice: true,
-      contentName: true,
-      estimatedValue: true,
-      height: true,
-      width: true,
-      length: true,
+    Object.entries(formData).forEach(([key, value]) => {
+      if (!value) {
+        errors[key] = true;
+      }
     });
 
+    if (Number(formData.estimatedValue) < 10) {
+      errors.estimatedValue = true;
+    }
+
+    // setFormErrors({
+    //   receiverName: true,
+    //   documentNumber: true,
+    //   sendingOffice: true,
+    //   destinationOffice: true,
+    //   contentName: true,
+    //   estimatedValue: true,
+    //   height: true,
+    //   width: true,
+    //   length: true,
+    // });
+
     // Devuelve true si no hay errores
+    setFormErrors(errors);
     return !Object.values(errors).some((error) => error);
   };
 
@@ -74,6 +87,11 @@ export const useCreateDeliveryOrderHook = () => {
     setFormData({
       ...formData,
       [name]: value,
+    });
+
+    setFormErrors({
+      ...formErrors,
+      [name]: false,
     });
   };
 
@@ -176,13 +194,17 @@ export const useCreateDeliveryOrderHook = () => {
       // router.push(`/order-tracking/${data.id}`);
       setFormBody(formData);
 
-      navigate('/courier-chain/user/payment');
+      navigate('/smart-deliver/user/payment');
     } catch (e) {
       alert('Something went wrong, please try again later');
     }
   };
 
   async function handleSubmitForm() {
+    if (!validateForm()) {
+      return;
+    }
+
     return handleSubmitPromise();
     // setLoading(true);
     // if (isSuccess) {

@@ -147,7 +147,7 @@ export const UserReceiptPage = () => {
         variant="contained"
         onClick={(e) => {
           e.preventDefault();
-          navigate('/courier-chain');
+          navigate('/smart-deliver');
         }}
       >
         Volver a hacer un envio{' '}

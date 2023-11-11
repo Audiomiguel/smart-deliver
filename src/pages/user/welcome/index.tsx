@@ -48,6 +48,7 @@ export const WelcomePageContent = () => {
     loading,
   } = useCreateDeliveryOrderHook();
 
+  console.log('Form Errors', formErrors);
   return (
     <Container sx={{ mt: 3 }}>
       <Paper sx={{ mb: 2 }}>
@@ -92,6 +93,7 @@ export const WelcomePageContent = () => {
               type="text"
               fullWidth
               label="Nombre del Emisor"
+              error={formErrors.emisorName}
               onChange={(e) => handleInputChange(e)}
               value={formData.emisorName}
               // onChange={updateLoginData}
@@ -109,6 +111,7 @@ export const WelcomePageContent = () => {
 
                 handleInputChange(e);
               }}
+              error={formErrors.emisorDocument}
               value={formData.emisorDocument}
               // onChange={updateLoginData}
             />
@@ -142,7 +145,8 @@ export const WelcomePageContent = () => {
               value={formData.estimatedValue}
               error={formErrors.estimatedValue}
               helperText={
-                formErrors.estimatedValue && 'Este campo es requerido'
+                formErrors.estimatedValue &&
+                'El valor estimado debe ser mayor a 10 INN'
               }
               onChange={(e) => handleInputChange(e)}
               label="Valor aproximado (INN)"

@@ -15,37 +15,37 @@ export const AppRouter = () => {
   return (
     <Routes>
       <Route
-        path="/courier-chain"
+        path="/smart-deliver"
         element={<RouterLayout navBar={<NavBar />} />}
       >
-        <Route path="/courier-chain" element={<HomePage />} />
+        <Route path="/smart-deliver" element={<HomePage />} />
       </Route>
-      <Route path="/courier-chain/login" element={<LoginPage />} />
-      <Route path="/courier-chain/sign-up" element={<SignUpPage />} />
+      <Route path="/smart-deliver/login" element={<LoginPage />} />
+      <Route path="/smart-deliver/sign-up" element={<SignUpPage />} />
 
       <Route
-        path="/courier-chain/user"
+        path="/smart-deliver/user"
         element={<RouterLayout navBar={<NavBar />} />}
       >
-        <Route path="/courier-chain/user" element={<WelcomePage />} />
-        <Route path="/courier-chain/user/payment" element={<PaymentPage />} />
+        <Route path="/smart-deliver/user" element={<WelcomePage />} />
+        <Route path="/smart-deliver/user/payment" element={<PaymentPage />} />
         <Route
-          path="/courier-chain/user/payment-detailt"
+          path="/smart-deliver/user/payment-detailt"
           element={<PaymentDetailPage />}
         />
         <Route
-          path="/courier-chain/user/receipt"
+          path="/smart-deliver/user/receipt"
           element={<UserReceiptPage />}
         />
       </Route>
 
       <Route
-        path="/courier-chain/admin"
+        path="/smart-deliver/admin"
         element={<RouterLayout navBar={<NavBarUser />} />}
       >
-        <Route path="/courier-chain/admin" element={<AdminHomePage />} />
+        <Route path="/smart-deliver/admin" element={<AdminHomePage />} />
       </Route>
-      <Route path="*" element={<Navigate to="/courier-chain" />} />
+      <Route path="*" element={<Navigate to="/smart-deliver" />} />
     </Routes>
   );
 };

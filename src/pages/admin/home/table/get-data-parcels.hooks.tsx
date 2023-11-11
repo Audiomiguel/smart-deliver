@@ -42,7 +42,7 @@ export const useDataParcelHooks = () => {
         package: `${parcel.package.dimensions.width} x ${parcel.package.dimensions.height} x ${parcel.package.dimensions.length}cm`,
         sendingOffice: parcel?.sendingOffice || 'Oficina Miraflores',
         destinyOffice: parcel?.destinyOffice || 'Oficina Plaza Norte',
-        createdAt: parcel.createdAt,
+        createdAt: new Date(parcel.createdAt).toString(),
         status: (
           <ChipTableAdminComponent
             rowTravel={parcel}

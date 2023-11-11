@@ -23,13 +23,13 @@ export const NavBar = () => {
               alignItems="center"
             >
               <Grid item>
-                <Typography>COURIER CHAIN</Typography>
+                <Typography>SMARTDELIVER</Typography>
               </Grid>
               <Grid item>
                 <Stack spacing={2} direction="row">
                   <Button
                     component={Link}
-                    to="/courier-chain/admin"
+                    to="/smart-deliver/login"
                     variant="outlined"
                     color="inherit"
                   >

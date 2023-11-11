@@ -9,10 +9,12 @@ import {
 } from '@mui/material';
 import { LoginService } from 'src/pages/login/login.service';
 import { useNavigate } from 'react-router-dom';
+import { useCreateForm } from 'src/context/create-form.contexts';
 
 export const SignUpPage = () => {
   const navigate = useNavigate();
 
+  const { setLoggedUser } = useCreateForm();
   const [isLoading, setIsLoading] = useState(false);
   const [registerError, setRegisterError] = useState('');
   const [formData, setFormData] = useState({
@@ -55,17 +57,20 @@ export const SignUpPage = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      await LoginService.register({
-        password: formData.password,
-        username: formData.username,
-        person: {
-          documentNumber: formData.documentNumber,
-          completeName: formData.fullName,
-        },
-        userType: 'client',
-      });
+      // await LoginService.register({
+      //   password: formData.password,
+      //   username: formData.username,
+      //   person: {
+      //     documentNumber: formData.documentNumber,
+      //     completeName: formData.fullName,
+      //   },
+      //   userType: 'client',
+      // });
 
-      return navigate('/courier-chain/user');
+      setLoggedUser({
+        username: formData.username,
+      });
+      return navigate('/smart-deliver/admin');
     } catch (error: any) {
       setRegisterError(error?.message || 'Error, Volver a intentar');
     } finally {

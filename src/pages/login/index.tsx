@@ -10,8 +10,10 @@ import {
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LoginService } from './login.service';
+import { useCreateForm } from 'src/context/create-form.contexts';
 
 export const LoginPage = () => {
+  const { setLoggedUser } = useCreateForm();
   const [isLoadin, setIsLoadin] = useState(false);
   const [loginError, setLoginError] = useState('');
   const navigate = useNavigate();
@@ -33,16 +35,20 @@ export const LoginPage = () => {
     setIsLoadin(true);
 
     try {
-      const { access_token, user } = await LoginService.login(
-        loginData.username,
-        loginData.password
-      );
+      // const { access_token, user } = await LoginService.login(
+      //   loginData.username,
+      //   loginData.password
+      // );
+      setLoggedUser({
+        username: loginData.username,
+      });
+      return navigate('/smart-deliver/admin');
 
       if (user.userType === 'admin') {
-        return navigate('/courier-chain/admin');
+        return navigate('/smart-deliver/admin');
       }
 
-      return navigate('/courier-chain/user');
+      return navigate('/smart-deliver/user');
     } catch (error) {
       // Maneja el error de inicio de sesión aquí
       setLoginError(error.message);
@@ -52,7 +58,7 @@ export const LoginPage = () => {
   };
 
   function handleRegister() {
-    return navigate('/courier-chain/sign-up');
+    return navigate('/smart-deliver/sign-up');
   }
 
   return (

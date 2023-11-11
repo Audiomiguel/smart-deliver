@@ -61,7 +61,7 @@ export const ButtonPaymentDetailComponent = () => {
         ...formBody,
         id: request?.id || '00001x',
       });
-      navigate('/courier-chain/user/receipt');
+      navigate('/smart-deliver/user/receipt');
     } catch (err) {
     } finally {
       setLoading(false);

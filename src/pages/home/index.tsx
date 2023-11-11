@@ -21,20 +21,20 @@ export const HomePage = () => {
       // await connectAsync();
       await connectAsync();
 
-      navigate('/courier-chain/user');
+      navigate('/smart-deliver/user');
     } catch (error: any) {
       if (error?.name === 'ConnectorAlreadyConnectedError')
-        return navigate('/courier-chain/');
+        return navigate('/smart-deliver/');
 
       alert('Verifique que tenga metamask instalado');
     }
-    // connect().then(() => navigate('/courier-chain/user'));
+    // connect().then(() => navigate('/smart-deliver/user'));
   };
 
   return (
     <Container sx={{ mt: 9 }} maxWidth="xl">
       <HeaderComponent
-        title={'COURIER CHAIN'}
+        title={'SMARTDELIVER'}
         description={
           'Ingresa con tu usuario y envia tus Smart Encomiendas desde un click de distancia!'
         }

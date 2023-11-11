@@ -1,22 +1,34 @@
 import { createContext, useContext, useState } from 'react';
+import { ILoggedUser } from 'src/interfaces';
 import { IFormData } from 'src/pages/user/interface/create-order.interface';
 
 interface IInitialValues {
   formBody: IFormData;
   setFormBody: React.Dispatch<React.SetStateAction<any>>;
+  loggedUser: ILoggedUser;
+  setLoggedUser: React.Dispatch<React.SetStateAction<ILoggedUser>>;
 }
 
 const initialValues: IInitialValues = {
   formBody: {},
   setFormBody: () => {},
+  loggedUser: {
+    username: '',
+  },
+  setLoggedUser: () => {},
 };
 
 export const CreateFormProvider = ({ children }: any) => {
   const [formBody, setFormBody] = useState<any>({});
+  const [loggedUser, setLoggedUser] = useState<ILoggedUser>({
+    username: '',
+  });
 
   const valueContext: IInitialValues = {
     formBody,
     setFormBody,
+    loggedUser,
+    setLoggedUser,
   };
 
   return (

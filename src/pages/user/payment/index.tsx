@@ -21,7 +21,7 @@ export const PaymentPage = () => {
   ];
 
   function confirmSale() {
-    navigate('/courier-chain/user/payment-detailt', {
+    navigate('/smart-deliver/user/payment-detailt', {
       state: {
         formData,
       },
