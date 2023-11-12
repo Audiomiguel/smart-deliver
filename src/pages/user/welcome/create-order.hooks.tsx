@@ -5,13 +5,19 @@ import { IFormData } from '../interface/create-order.interface';
 import { v4 } from 'uuid';
 
 import { useCreateForm } from 'src/context/create-form.contexts';
+import { useAccount } from 'wagmi';
 
 export const useCreateDeliveryOrderHook = () => {
   const { setFormBody } = useCreateForm();
+  const navigate = useNavigate();
+  const { address, isDisconnected } = useAccount();
+
+  useEffect(() => {
+    isDisconnected && navigate('/smart-deliver');
+  }, []);
 
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
   const [officeOptions, setOfficeOptions] = useState<
     {
       value: string;

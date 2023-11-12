@@ -93,7 +93,6 @@ export const ButtonPaymentDetailComponent = () => {
   }
 
   if (isSuccess) {
-    debugger;
     handleSubmitPromise();
     navigate('/smart-deliver/user/receipt');
   }
