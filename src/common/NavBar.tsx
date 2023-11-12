@@ -33,7 +33,7 @@ export const NavBar = () => {
                     variant="outlined"
                     color="inherit"
                   >
-                    Admin
+                    Login
                   </Button>
                   {/* <MetaMaskButton /> */}
                 </Stack>
