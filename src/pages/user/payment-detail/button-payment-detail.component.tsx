@@ -59,7 +59,7 @@ export const ButtonPaymentDetailComponent = () => {
 
       setFormBody({
         ...formBody,
-        id: request?.id || '00001x',
+        id: request?.id || '',
       });
       navigate('/smart-deliver/user/receipt');
     } catch (err) {
@@ -81,7 +81,7 @@ export const ButtonPaymentDetailComponent = () => {
     if (allowance < shippingFee) write?.();
 
     try {
-      return handleSubmitPromise().finally(() => {
+      return await handleSubmitPromise().finally(() => {
         //debugger;
         setLoading(false);
       });
@@ -90,6 +90,12 @@ export const ButtonPaymentDetailComponent = () => {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (isSuccess) {
+    debugger;
+    handleSubmitPromise();
+    navigate('/smart-deliver/user/receipt');
   }
 
   return (
