@@ -26,7 +26,7 @@ export const WelcomePage = () => {
 };
 
 export const WelcomePageContent = () => {
-  // const [symbol, _] = useState<string>('INN');
+  // const [symbol, _] = useState<string>('soles');
   // const [wallet, setWallet] = useState({
   //   allowance: BigInt(0),
   //   balance: BigInt(0),
@@ -146,10 +146,10 @@ export const WelcomePageContent = () => {
               error={formErrors.estimatedValue}
               helperText={
                 formErrors.estimatedValue &&
-                'El valor estimado debe ser mayor a 10 INN'
+                'El valor estimado debe ser mayor a 10 soles'
               }
               onChange={(e) => handleInputChange(e)}
-              label="Valor aproximado (INN)"
+              label="Valor aproximado (soles)"
               required
               // onChange={updateLoginData}
             />
@@ -264,7 +264,7 @@ export const WelcomePageContent = () => {
               disabled={isLoading || loading}
               onClick={() => handleSubmitForm()}
             >
-              PAGAR 8 INN
+              PAGAR 8 soles
             </Button>
           }
         </Box>

@@ -36,7 +36,7 @@ export const useDataParcelHooks = () => {
         id: parcel.id,
         sender: parcel.sender,
         productName: parcel.productName,
-        amount: `${parcel?.amount || '1'} INN`,
+        amount: `${parcel?.amount || '1'} soles`,
 
         recipient: `${parcel.recipient.name} - ${parcel.recipient.document}`,
         package: `${parcel.package.dimensions.width} x ${parcel.package.dimensions.height} x ${parcel.package.dimensions.length}cm`,

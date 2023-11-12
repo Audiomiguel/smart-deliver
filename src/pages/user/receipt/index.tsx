@@ -135,8 +135,8 @@ export const UserReceiptPage = () => {
           <Box textAlign="right" minWidth="300px">
             <Typography>{`Valor estimado: ${
               formBody?.estimatedValue || 0
-            } INN`}</Typography>
-            <Typography variant="subtitle1">{`Costo de envio: 8 INN`}</Typography>
+            } soles`}</Typography>
+            <Typography variant="subtitle1">{`Costo de envio: 8 soles`}</Typography>
           </Box>
         </Paper>
       </Box>

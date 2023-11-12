@@ -79,7 +79,7 @@ export const PaymentDetailPage = () => {
     {
       icon: <PaidIcon />,
       title: 'Valor estimado del objeto:',
-      description: `${formBody?.estimatedValue || 0} INN`,
+      description: `${formBody?.estimatedValue || 0} soles`,
     },
   ];
 
@@ -158,7 +158,7 @@ export const PaymentDetailPage = () => {
               <Typography>Monto a pagar</Typography>
             </Box>
             <div>
-              <Typography>8 INN</Typography>
+              <Typography>8 soles</Typography>
             </div>
           </Box>
         </Paper>

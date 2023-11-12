@@ -107,7 +107,7 @@ export const ButtonPaymentDetailComponent = () => {
         variant="contained"
         size="large"
       >
-        AUTORIZAR PAGO (8 INN)
+        AUTORIZAR PAGO (8 soles)
       </Button>
       <LoadingModal open={isLoading || loading} />
     </div>
