@@ -3,19 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { HeaderComponent } from 'src/components';
 import { useNotification } from 'src/context/notification.context';
 import SmartContractImage from 'src/assets/image/smart-contracts.png';
-import { useConnect } from 'wagmi';
+import { useAccount, useConnect } from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
-import { useAccount } from '@metamask/sdk-react-ui';
-// import { useConnect } from 'wagmi';
 // import { InjectedConnector } from 'wagmi/connectors/injected';
 
 export const HomePage = () => {
   const navigate = useNavigate();
-  const { address, isConnected } = useAccount();
   const { getError } = useNotification();
   const { connectAsync } = useConnect({
     connector: new InjectedConnector(),
   });
+  const { address, isConnected } = useAccount();
 
   const handleClick = async () => {
     try {
